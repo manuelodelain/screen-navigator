@@ -3,7 +3,7 @@ var inherits = require('inherits');
 var Transition = require('./Transition.js');
 
 var ScreenNavigator = function(){
-  this.screens = [];
+  this.screens = {};
   this.currentScreen = null;
   this.prevScreen = null;
   this.transition = null;
@@ -12,10 +12,14 @@ var ScreenNavigator = function(){
 inherits(ScreenNavigator, TinyEmitter);
 
 ScreenNavigator.prototype.addScreen = function(id, item) {
-  
+  this.screens[id] = item;
 };
 
-ScreenNavigator.prototype.showScreen = function(id, transitionType) {
+ScreenNavigator.prototype.getScreen = function(id, item) {
+  return this.screens[id];
+};
+
+ScreenNavigator.prototype.showScreen = function(id, transition) {
   if (this.currentScreen){
     this.prevScreen = this.currentScreen;
   }
@@ -24,10 +28,21 @@ ScreenNavigator.prototype.showScreen = function(id, transitionType) {
     this.transition.dispose();
   }
 
-  this.transition = new Transition(this.currentScreen, this.prevScreen, transitionType);
+  if (typeof transition === 'string'){
+    this.transition = new Transition(this.currentScreen, this.prevScreen, transition);
+  }else{
+    this.transition = transition;
+  }
+
+  this.onChange();
+
   this.transition.on('start', this.onTransitionStart.bind(this));
   this.transition.on('complete', this.onTransitionComplete.bind(this));
   this.transition.start();
+};
+
+ScreenNavigator.prototype.onChange = function() {
+  this.emit('change');
 };
 
 ScreenNavigator.prototype.onTransitionStart = function() {
