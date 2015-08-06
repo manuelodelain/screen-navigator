@@ -6,7 +6,9 @@ var ScreenNavigator = function(){
   this.screens = {};
   this.currentScreen = null;
   this.prevScreen = null;
+
   this.transition = null;
+  this.defaultTransition = Transition.NONE;
 };
 
 inherits(ScreenNavigator, TinyEmitter);
