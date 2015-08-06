@@ -1,0 +1,26 @@
+{
+  "name": "screen-navigator",
+  "version": "0.0.1",
+  "description": "Navigate between screens",
+  "main": "src/ScreenNavigator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/manuelodelain/screen-navigator.git"
+  },
+  "keywords": [
+    "screen",
+    "page",
+    "navigation",
+    "animation",
+    "transition"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/manuelodelain/screen-navigator/issues"
+  },
+  "homepage": "https://github.com/manuelodelain/screen-navigator"
+}
