@@ -66,7 +66,7 @@ ScreenNavigator.prototype.startTransition = function(transitionType) {
   var currentScreen = this.currentItem ? this.currentItem.getScreen() : null;
   var prevScreen = this.prevItem ? this.prevItem.getScreen() : null;
 
-  this.animateCompleteCount++; = 0;
+  this.animateCompleteCount = 0;
   this.transitionType = transitionType ? transitionType : this.defaultTransitionType;
 
   switch(transitionType){
