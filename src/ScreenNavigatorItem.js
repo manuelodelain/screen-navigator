@@ -6,10 +6,12 @@ var ScreenNavigatorItem = function(screen, events){
 };
 
 ScreenNavigatorItem.prototype.getScreen = function() {
-  if (this.isInstance) {
-    this.instance = this.screen;
-  }else{
-    this.instance = new this.screen();
+  if (!this.instance){
+    if (this.isInstance) {
+      this.instance = this.screen;
+    }else{
+      this.instance = new this.screen();
+    }
   }
 
   return this.instance;
@@ -31,3 +33,5 @@ ScreenNavigatorItem.prototype.dispose = function() {
 
   this.instance = this.screen = null;
 };
+
+module.exports = ScreenNavigatorItem;
