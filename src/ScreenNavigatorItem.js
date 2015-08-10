@@ -17,7 +17,7 @@ ScreenNavigatorItem.prototype.getScreen = function() {
   return this.instance;
 };
 
-ScreenNavigatorItem.prototype.disposeInstance = function() {
+ScreenNavigatorItem.prototype.disposeScreen = function() {
   if (this.isInstance) return;
 
   this.instance.dispose();

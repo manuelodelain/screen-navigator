@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <style>
+    html, body{
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .page{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: red;
+      visibility: hidden;
+    }
+
+    .page.active{
+      visibility: visible;
+    }
+
+    nav{
+      position: absolute;
+      top: 0;
+      right: 50px;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+  <section class="page" id="home-page">
+    <h1>Home</h1>
+  </section>
+  <section class="page" id="about-page">
+    <h1>About</h1>
+  </section>
+  <section class="page" id="contact-page">
+    <h1>Contact</h1>
+  </section>
+  <script class="page" src="bundle.js"></script>
+</body>
+</html>
