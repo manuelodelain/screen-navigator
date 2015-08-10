@@ -4,6 +4,7 @@
   "description": "Navigate between screens",
   "main": "src/ScreenNavigator.js",
   "scripts": {
+    "watch": "watchify example/index.js -o example/bundle.js -dv",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,5 +27,11 @@
   "dependencies": {
     "inherits": "^2.0.1",
     "tiny-emitter": "^1.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^10.2.3",
+    "http-server": "^0.8.0",
+    "uglifyjs": "^2.4.10",
+    "watchify": "^3.2.1"
   }
 }
