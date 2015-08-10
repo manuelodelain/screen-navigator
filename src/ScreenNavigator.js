@@ -74,7 +74,7 @@ ScreenNavigator.prototype.startTransition = function(transitionType) {
   this.animateCompleteCount = 0;
   this.transitionType = transitionType ? transitionType : this.defaultTransitionType;
 
-  switch(transitionType){
+  switch(this.transitionType){
     case ScreenNavigator.TRANSITION_OUT_AND_IN:
       if (prevScreen) {
         prevScreen.on('animateOutComplete', this.animateOutCompleteCb);
@@ -164,8 +164,8 @@ ScreenNavigator.prototype.onAnimateInComplete = function() {
   var prevScreen = this.prevItem ? this.prevItem.getScreen() : null;
 
   this.animateCompleteCount++; 
-
-  switch(transitionType){
+  
+  switch(this.transitionType){
     case ScreenNavigator.TRANSITION_OUT_AND_IN:
       if (this.animateCompleteCount === 2 || !this.prevItem) this.onTransitionComplete();
       break;
@@ -196,8 +196,8 @@ ScreenNavigator.prototype.onAnimateOutComplete = function() {
   var prevScreen = this.prevItem ? this.prevItem.getScreen() : null;
 
   this.animateCompleteCount++;
-
-  switch(transitionType){
+  
+  switch(this.transitionType){
     case ScreenNavigator.TRANSITION_OUT_AND_IN:
       if (this.animateCompleteCount === 2 || !this.currentItem) this.onTransitionComplete();
       break;

@@ -19,8 +19,6 @@ AScreen.prototype.animateOut = function(complete) {
 };
 
 AScreen.prototype.onAnimateOutComplete = function() {
-  this.dispose();
-  
   this.emit('animateOutComplete');
 };
 

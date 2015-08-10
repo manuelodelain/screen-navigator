@@ -13,6 +13,13 @@
       overflow: hidden;
     }
 
+    nav{
+      position: absolute;
+      top: 0;
+      right: 50px;
+      z-index: 10;
+    }
+
     .page{
       position: absolute;
       top: 0;
@@ -27,11 +34,52 @@
       visibility: visible;
     }
 
-    nav{
+    h1{
+      position: relative;
+      z-index: 2;
+    }
+
+    .sub-page{
       position: absolute;
       top: 0;
-      right: 50px;
-      z-index: 10;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: orange;
+      visibility: hidden;
+    }
+
+    .sub-page.active{
+      visibility: visible;
+    }
+
+    .sub-pages-nav{
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .sub-pages-nav li{
+      display: inline-block;
+      margin-right: 10px;
+      list-style-type: none;
+    }
+
+    .sub-pages-nav a{
+      display: block;
+      width: 8px;
+      height: 8px;
+      background-color: #ccc;
+      border-radius: 100%;
+    }
+
+    .sub-pages-nav a:hover{
+      background-color: #666;
+    }
+
+    .sub-pages-nav li.active a{
+      background-color: #000;
     }
   </style>
 </head>
@@ -45,6 +93,11 @@
   </nav>
   <section class="page" id="home-page">
     <h1>Home</h1>
+    <div class="sub-pages-container"></div>
+    <div class="sub-pages-nav">
+      <ul>
+      </ul>
+    </div>
   </section>
   <section class="page" id="about-page">
     <h1>About</h1>
