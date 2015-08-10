@@ -4,6 +4,7 @@ var inherits = require('inherits');
 var ScreenNavigator = function(){
   this.items = {};
   this.currentItem = null;
+  this.currentItemId = null;
   this.prevItem = null;
 
   this.transitionRunning = false;
@@ -31,6 +32,9 @@ ScreenNavigator.prototype.getItem = function(id) {
 };
 
 ScreenNavigator.prototype.showScreen = function(id, transitionType) {
+  if (id === this.currentItemId) return;
+
+
   var newItem = this.getItem(id);
 
   if (!newItem){
@@ -41,6 +45,7 @@ ScreenNavigator.prototype.showScreen = function(id, transitionType) {
     this.prevItem = this.currentItem;
   }
 
+  this.currentItemId = id;
   this.currentItem = newItem;
 
   this.onChange();
