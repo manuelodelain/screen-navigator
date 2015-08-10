@@ -244,6 +244,8 @@ ScreenNavigator.prototype.disposeTransition = function() {
   if (prevScreen){
     prevScreen.off('animateInComplete', this.animateInCompleteCb)
               .off('animateOutComplete', this.animateOutCompleteCb);
+
+    this.prevItem.disposeScreen();
   }
 
   if (currentScreen){
