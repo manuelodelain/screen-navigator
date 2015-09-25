@@ -4,7 +4,7 @@ var Home = require('./pages/Home.js');
 var About = require('./pages/About.js');
 
 var navigator = new ScreenNavigator();
-
+console.log(ScreenNavigator.defaultTransitionType);
 // listen to screens changes
 navigator.on('change', onPageChange);
 

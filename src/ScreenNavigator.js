@@ -8,7 +8,7 @@ var ScreenNavigator = function(){
   this.prevItem = null;
 
   this.transitionRunning = false;
-  this.transitionType = this.defaultTransitionType = ScreenNavigator.TRANSITION_NONE;
+  this.transitionType = ScreenNavigator.defaultTransitionType;
   this.animateInCompleteCb = this.onAnimateInComplete.bind(this);
   this.animateOutCompleteCb = this.onAnimateInComplete.bind(this);
   this.animateCompleteCount = 0;
@@ -22,6 +22,8 @@ ScreenNavigator.TRANSITION_IN_THEN_OUT = 'inThenOut';
 ScreenNavigator.TRANSITION_OUT = 'out';
 ScreenNavigator.TRANSITION_IN = 'in';
 ScreenNavigator.TRANSITION_NONE = 'none';
+
+ScreenNavigator.defaultTransitionType = ScreenNavigator.TRANSITION_NONE;
 
 ScreenNavigator.prototype.addItem = function(id, item) {
   this.items[id] = item;
