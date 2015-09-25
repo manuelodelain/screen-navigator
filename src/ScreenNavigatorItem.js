@@ -8,7 +8,6 @@ var ScreenNavigatorItem = function(screen, events){
 ScreenNavigatorItem.prototype.getScreen = function() {
   if (!this.instance){
       this.instance = new this.screen();
-    }
   }
 
   return this.instance;
