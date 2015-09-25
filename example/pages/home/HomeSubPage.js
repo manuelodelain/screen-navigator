@@ -1,6 +1,5 @@
 var AScreen = require('../../../src/AScreen.js');
 var inherits = require('inherits');
-var TweenMax = require('gsap');
 
 var HomeItem = function(container, index){
   this.element = document.createElement('div');
@@ -14,13 +13,15 @@ var HomeItem = function(container, index){
 inherits(HomeItem, AScreen);
 
 HomeItem.prototype.animateIn = function() {
-  TweenMax.fromTo(this.element, 1, {
-    xPercent: 100
-  }, {
-    xPercent: 0,
-    ease: Expo.easeInOut,
-    onComplete: this.onAnimateInComplete.bind(this)
+  var anim = this.element.animate([
+    {transform: 'translate(100%)'},
+    {transform: 'translate(0)'}
+  ], {
+    duration: 1000, 
+    easing: 'cubic-bezier(0.190, 1.000, 0.220, 1.000)'
   });
+
+  anim.addEventListener('finish', this.onAnimateInComplete.bind(this));
 
   this.element.classList.add('active');
 };
@@ -30,11 +31,15 @@ HomeItem.prototype.onAnimateInComplete = function() {
 };
 
 HomeItem.prototype.animateOut = function(complete) {
-  TweenMax.to(this.element, 1, {
-    xPercent: -100,
-    ease: Expo.easeOut,
-    onComplete: this.onAnimateOutComplete.bind(this)
+  var anim = this.element.animate([
+    {transform: 'translate(0)'},
+    {transform: 'translate(-100%)'}
+  ], {
+    duration: 1000, 
+    easing: 'cubic-bezier(0.190, 1.000, 0.220, 1.000)'
   });
+
+  anim.addEventListener('finish', this.onAnimateOutComplete.bind(this));
   
   if (complete) {
     this.onAnimateOutComplete();
