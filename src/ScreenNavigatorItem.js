@@ -1,15 +1,12 @@
 var ScreenNavigatorItem = function(screen, events){
   this.screen = screen;
 
-  this.isInstance = typeof screen === 'function' ? false : true;
-  this.instance = null;
+  this.isInstance = typeof screen !== 'function';
+  this.instance = this.isInstance ? screen : null;
 };
 
 ScreenNavigatorItem.prototype.getScreen = function() {
   if (!this.instance){
-    if (this.isInstance) {
-      this.instance = this.screen;
-    }else{
       this.instance = new this.screen();
     }
   }
@@ -25,9 +22,7 @@ ScreenNavigatorItem.prototype.disposeScreen = function() {
 };
 
 ScreenNavigatorItem.prototype.dispose = function() {
-  if (this.isInstance){
-    this.screen.dispose();
-  }else if (this.instance){
+  if (this.instance){
     this.instance.dispose();
   }
 
