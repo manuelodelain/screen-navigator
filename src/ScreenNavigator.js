@@ -36,19 +36,16 @@ ScreenNavigator.prototype.getItem = function(id) {
 ScreenNavigator.prototype.showScreen = function(id, transitionType) {
   if (id === this.currentItemId) return;
 
-
-  var newItem = this.getItem(id);
-
-  if (!newItem){
-    throw new Error('ScreenNavigator - the item with the id ' + id + ' doesn\'t exist');
-  }
-
   if (this.currentItem){
     this.prevItem = this.currentItem;
   }
 
   this.currentItemId = id;
-  this.currentItem = newItem;
+  this.currentItem = this.getItem(id);
+
+  if (!this.currentItem){
+    throw new Error('ScreenNavigator - the item with the id ' + id + ' doesn\'t exist');
+  }
 
   this.onChange();
 
