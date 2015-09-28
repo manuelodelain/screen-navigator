@@ -4,9 +4,8 @@ var ScreenNavigatorItem = require('./ScreenNavigatorItem.js');
 
 var ScreenNavigator = function(){
   this.items = {};
-  this.currentItem = null;
   this.currentItemId = null;
-  this.prevItem = null;
+  this.prevItemId = null;
 
   this.transitionRunning = false;
   this.transitionType = ScreenNavigator.defaultTransitionType;
@@ -40,14 +39,15 @@ ScreenNavigator.prototype.getItem = function(id) {
 ScreenNavigator.prototype.showScreen = function(id, transitionType) {
   if (id === this.currentItemId) return;
 
-  if (this.currentItem){
-    this.prevItem = this.currentItem;
+  if (this.currentItemId){
+    this.prevItemId = this.currentItemId;
   }
 
   this.currentItemId = id;
-  this.currentItem = this.getItem(id);
 
-  if (!this.currentItem){
+  var currentItem = this.getItem(id);
+
+  if (!currentItem){
     throw new Error('ScreenNavigator - the item with the id ' + id + ' doesn\'t exist');
   }
 
@@ -71,8 +71,10 @@ ScreenNavigator.prototype.startTransition = function(transitionType) {
     this.cancelTransition();
   } 
 
-  var currentScreen = this.currentItem ? this.currentItem.getScreen() : null;
-  var prevScreen = this.prevItem ? this.prevItem.getScreen() : null;
+  var prevItem = this.getItem(this.prevItemId);
+  var currentItem = this.getItem(this.currentItemId);
+  var currentScreen = currentItem ? currentItem.getScreen() : null;
+  var prevScreen = prevItem ? prevItem.getScreen() : null;
 
   this.animateCompleteCount = 0;
   this.transitionType = transitionType ? transitionType : this.defaultTransitionType;
@@ -141,16 +143,19 @@ ScreenNavigator.prototype.startTransition = function(transitionType) {
 };
 
 ScreenNavigator.prototype.cancelTransition = function(complete) {
+  var prevItem = this.getItem(this.prevItemId);
+  var currentItem = this.getItem(this.currentItemId);
+
   this.transitionRunning = false;
 
   this.disposeTransition();
 
-  if (this.prevItem){
-    this.prevItem.getScreen().animateOut(true);
+  if (prevItem){
+    prevItem.getScreen().animateOut(true);
   }
 
-  if (this.currentItem){
-    this.currentItem.getScreen().animateOut(true);
+  if (currentItem){
+    currentItem.getScreen().animateOut(true);
   }
 };
 
@@ -163,8 +168,10 @@ ScreenNavigator.prototype.onTransitionStart = function() {
 };
 
 ScreenNavigator.prototype.onAnimateInComplete = function() {
-  var currentScreen = this.currentItem ? this.currentItem.getScreen() : null;
-  var prevScreen = this.prevItem ? this.prevItem.getScreen() : null;
+  var prevItem = this.getItem(this.prevItemId);
+  var currentItem = this.getItem(this.currentItemId);
+  var currentScreen = currentItem ? currentItem.getScreen() : null;
+  var prevScreen = prevItem ? prevItem.getScreen() : null;
 
   this.animateCompleteCount++; 
   
@@ -195,8 +202,10 @@ ScreenNavigator.prototype.onAnimateInComplete = function() {
 };
 
 ScreenNavigator.prototype.onAnimateOutComplete = function() {
-  var currentScreen = this.currentItem ? this.currentItem.getScreen() : null;
-  var prevScreen = this.prevItem ? this.prevItem.getScreen() : null;
+  var prevItem = this.getItem(this.prevItemId);
+  var currentItem = this.getItem(this.currentItemId);
+  var currentScreen = currentItem ? currentItem.getScreen() : null;
+  var prevScreen = prevItem ? prevItem.getScreen() : null;
 
   this.animateCompleteCount++;
   
@@ -241,14 +250,16 @@ ScreenNavigator.prototype.dispose = function() {
 };
 
 ScreenNavigator.prototype.disposeTransition = function() {
-  var currentScreen = this.currentItem ? this.currentItem.getScreen() : null;
-  var prevScreen = this.prevItem ? this.prevItem.getScreen() : null;
+  var prevItem = this.getItem(this.prevItemId);
+  var currentItem = this.getItem(this.currentItemId);
+  var currentScreen = currentItem ? currentItem.getScreen() : null;
+  var prevScreen = prevItem ? prevItem.getScreen() : null;
 
   if (prevScreen){
     prevScreen.off('animateInComplete', this.animateInCompleteCb)
               .off('animateOutComplete', this.animateOutCompleteCb);
 
-    this.prevItem.disposeScreen();
+    prevItem.disposeScreen();
   }
 
   if (currentScreen){
