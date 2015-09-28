@@ -40,10 +40,6 @@ HomeItem.prototype.animateOut = function(complete) {
   });
 
   anim.addEventListener('finish', this.onAnimateOutComplete.bind(this));
-  
-  if (complete) {
-    this.onAnimateOutComplete();
-  }
 };
 
 HomeItem.prototype.onAnimateOutComplete = function() {

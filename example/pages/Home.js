@@ -12,7 +12,7 @@ var Home = function(){
 
   this.navigator = new ScreenNavigator();
   this.navigator.defaultTransitionType = ScreenNavigator.TRANSITION_OUT_AND_IN;
-  this.navigator.on('change', this.onSubPageChange.bind(this));
+  this.navigator.on('screenChange', this.onSubPageChange.bind(this));
   this.navigator.on('transitionComplete', function(){
     console.log('transition complete');
   });

@@ -6,16 +6,14 @@ var AScreen = function(){
 
 inherits(AScreen, TinyEmitter);
 
-AScreen.prototype.animateIn = function(complete) {
-  this.onAnimateInComplete();
+AScreen.prototype.animateIn = function(cancel) {
 };
 
 AScreen.prototype.onAnimateInComplete = function() {
   this.emit('animateInComplete');
 };
 
-AScreen.prototype.animateOut = function(complete) {
-  this.onAnimateOutComplete();
+AScreen.prototype.animateOut = function(cancel) {
 };
 
 AScreen.prototype.onAnimateOutComplete = function() {

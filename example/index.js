@@ -14,7 +14,7 @@ navigator.addItem('home', new Home());
 // 
 // add screen class with options
 navigator.addItem('about', About, {
-	arguments: ['new About page'], // constructor arguments
+	arguments: ['my message'], // constructor arguments
 	properties: {}, // set properties at the screen initialization
 	canDispose: false
 }); 

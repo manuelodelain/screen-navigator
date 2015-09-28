@@ -9,14 +9,14 @@ inherits(APage, AScreen);
 
 APage.prototype.animateIn = function() {
   this.element.classList.add('active');
+
+  this.onAnimateInComplete();
 };
 
-APage.prototype.animateOut = function(complete) {
+APage.prototype.animateOut = function() {
   this.element.classList.remove('active');
 
-  if (complete) {
-    this.onAnimateOutComplete();
-  }
+  this.onAnimateOutComplete();
 };
 
 module.exports = APage;
