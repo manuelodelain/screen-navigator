@@ -4,9 +4,14 @@ var ScreenNavigatorItem = function(screen, options){
   this.isInstance = typeof screen !== 'function';
   this.instance = this.isInstance ? screen : null;
 
-  this.arguments = options && options.arguments ? options.arguments : null;
-  this.properties = options && options.properties ? options.properties : null;
-  this.canDispose = options && options.canDispose ? options.canDispose : !this.isInstance;
+  // default options
+  this.arguments = null;
+  this.properties = null;
+  this.canDispose = !this.isInstance;
+
+  for (var optionKey in options){
+    if (typeof this[optionKey] !== 'undefined') this[optionKey] = options[optionKey];
+  }
 };
 
 ScreenNavigatorItem.prototype.getScreen = function() {
@@ -33,7 +38,7 @@ ScreenNavigatorItem.prototype.getScreen = function() {
 };
 
 ScreenNavigatorItem.prototype.disposeScreen = function() {
-  if (this.isInstance) return;
+  if (!this.canDispose) return;
 
   this.instance.dispose();
   this.instance = null;
@@ -48,3 +53,4 @@ ScreenNavigatorItem.prototype.dispose = function() {
 };
 
 module.exports = ScreenNavigatorItem;
+
