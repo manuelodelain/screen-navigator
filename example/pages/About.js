@@ -1,7 +1,8 @@
 var APage = require('./APage.js');
 var inherits = require('inherits');
 
-var About = function(){
+var About = function(msg){
+	console.log(msg);
   APage.call(this, 'about');
 };
 

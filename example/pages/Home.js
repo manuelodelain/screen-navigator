@@ -1,7 +1,6 @@
 var APage = require('./APage.js');
 var inherits = require('inherits');
 var ScreenNavigator = require('../../src/ScreenNavigator.js');
-var ScreenNavigatorItem = require('../../src/ScreenNavigatorItem.js');
 var HomeSubPage = require('./home/HomeSubPage.js');
 
 var Home = function(){
@@ -19,7 +18,7 @@ var Home = function(){
   });
 
   for (var i = 0; i < 6; i++) {
-    this.navigator.addItem('page' + i, new ScreenNavigatorItem(new HomeSubPage(subPagesContainer, i)));
+    this.navigator.addItem('page' + i, new HomeSubPage(subPagesContainer, i));
 
     var navItem = document.createElement('li');
     navItem.setAttribute('data-screen-id', 'page' + i);

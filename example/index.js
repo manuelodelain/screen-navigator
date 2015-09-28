@@ -1,19 +1,28 @@
 var ScreenNavigator = require('../src/ScreenNavigator.js');
-var ScreenNavigatorItem = require('../src/ScreenNavigatorItem.js');
 var Home = require('./pages/Home.js');
 var About = require('./pages/About.js');
 
 var navigator = new ScreenNavigator();
 
-// listen to screens changes
+// listen screens changes
 navigator.on('change', onPageChange);
 
-// add screens
-navigator.addItem('home', new ScreenNavigatorItem(new Home())); 
-navigator.addItem('about', new ScreenNavigatorItem(About)); 
-navigator.addItem('contact', new ScreenNavigatorItem(require('./pages/Contact.js'))); 
+// ADD SCREENS
+// 
+// add screen instance
+navigator.addItem('home', new Home()); 
+// 
+// add screen class with options
+navigator.addItem('about', About, {
+	arguments: ['yes'], // constructor arguments
+	properties: {}, // set properties at the screen initialization
+	canDispose: false
+}); 
+// 
+// add screen class
+navigator.addItem('contact', require('./pages/Contact.js')); 
 
-// show first screen
+// SHOW FIRST SCREEN
 navigator.showScreen('home');
 
 var navItems = document.querySelectorAll('nav li a');
@@ -26,6 +35,7 @@ for (var i = 0; i < navItems.length; i++) {
     var id = event.currentTarget.getAttribute('href').split('/')[1];
     if (id === '') id = 'home';
 
+    // show screen
     navigator.showScreen(id);
   })
 };

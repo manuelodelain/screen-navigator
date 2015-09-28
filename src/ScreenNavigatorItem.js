@@ -1,13 +1,32 @@
-var ScreenNavigatorItem = function(screen, events){
+var ScreenNavigatorItem = function(screen, options){
   this.screen = screen;
 
   this.isInstance = typeof screen !== 'function';
   this.instance = this.isInstance ? screen : null;
+
+  this.arguments = options && options.arguments ? options.arguments : null;
+  this.properties = options && options.properties ? options.properties : null;
+  this.canDispose = options && options.canDispose ? options.canDispose : !this.isInstance;
 };
 
 ScreenNavigatorItem.prototype.getScreen = function() {
   if (!this.instance){
-      this.instance = new this.screen();
+    var args = this.arguments;
+    var constructor = this.screen;
+
+    function F(){
+      constructor.apply(this, args);
+    }
+
+    F.prototype = constructor.prototype;
+
+    this.instance = new F();
+  }
+
+  if (this.properties){
+    for (var key in this.properties){
+      this.instance[key] = this.properties[key];
+    }
   }
 
   return this.instance;

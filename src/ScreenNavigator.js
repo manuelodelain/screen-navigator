@@ -1,5 +1,6 @@
 var TinyEmitter = require('tiny-emitter');
 var inherits = require('inherits');
+var ScreenNavigatorItem = require('./ScreenNavigatorItem.js');
 
 var ScreenNavigator = function(){
   this.items = {};
@@ -9,6 +10,7 @@ var ScreenNavigator = function(){
 
   this.transitionRunning = false;
   this.transitionType = ScreenNavigator.defaultTransitionType;
+
   this.animateInCompleteCb = this.onAnimateInComplete.bind(this);
   this.animateOutCompleteCb = this.onAnimateInComplete.bind(this);
   this.animateCompleteCount = 0;
@@ -25,7 +27,9 @@ ScreenNavigator.TRANSITION_NONE = 'none';
 
 ScreenNavigator.defaultTransitionType = ScreenNavigator.TRANSITION_NONE;
 
-ScreenNavigator.prototype.addItem = function(id, item) {
+ScreenNavigator.prototype.addItem = function(id, screen, options) {
+  var item = new ScreenNavigatorItem(screen, options);
+
   this.items[id] = item;
 };
 
@@ -254,7 +258,7 @@ ScreenNavigator.prototype.disposeTransition = function() {
 };
 
 module.exports.AScreen = require('./AScreen.js');
-module.exports.ScreenNavigatorItem = require('./ScreenNavigatorItem.js');
+module.exports.ScreenNavigatorItem = ScreenNavigatorItem;
 
 module.exports = ScreenNavigator;
 
