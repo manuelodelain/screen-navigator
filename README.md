@@ -107,7 +107,12 @@ Dispose the instance and all its ScreenNavigatorItem instances.
 
 - `defaultTransition`: `function` change the default transition for all instances
 
+### `ScreenNavigator` events
 
+- `screenChange` 
+- `transitionStart`
+- `transitionComplete`
+- `transitionCancel`
 
 ## `Transitions`
 
@@ -125,9 +130,11 @@ The `completeCallback` is called when the transition is finished.
 The `cancel` function is called if the navigator has to stop the transition.  
 
 
+## `AScreen`
 
-## Browsers support
+Abstract class. Extend it for using the predifined transitions.
+
 
 ## License
 
-
+MIT.
