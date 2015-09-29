@@ -89,11 +89,13 @@ ScreenNavigator.prototype.onTransitionComplete = function(cancelTransition) {
 
   var prevItem = this.getItem(this.prevItemId);
 
+  if (cancelTransition){
+    if (this.transitionCancel) this.transitionCancel();
+  }
+
   if (prevItem) prevItem.disposeScreen();
 
   if (cancelTransition){
-    if (this.transitionCancel) this.transitionCancel();
-
     this.emit('transitionCancel');
   }else{
     this.emit('transitionComplete');
