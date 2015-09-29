@@ -27,10 +27,12 @@
       width: 100%;
       height: 100%;
       background-color: red;
+      opacity: 0;
       visibility: hidden;
     }
 
     .page.active{
+      z-index: 3;
       visibility: visible;
     }
 
@@ -82,6 +84,7 @@
       background-color: #000;
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
 </head>
 <body>
   <nav>

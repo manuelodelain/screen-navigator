@@ -10,34 +10,37 @@ var Home = function(){
   var subPagesContainer = document.querySelector('.sub-pages-container');
   var navElement = document.querySelector('.sub-pages-nav ul');
 
-  this.navigator = new ScreenNavigator();
-  this.navigator.defaultTransitionType = ScreenNavigator.TRANSITION_OUT_AND_IN;
-  this.navigator.on('screenChange', this.onSubPageChange.bind(this));
-  this.navigator.on('transitionComplete', function(){
-    console.log('transition complete');
-  });
+  // this.navigator = new ScreenNavigator();
 
-  for (var i = 0; i < 6; i++) {
-    this.navigator.addItem('page' + i, new HomeSubPage(subPagesContainer, i));
+  // this.navigator.defaultTransitionType = ScreenNavigator.TRANSITION_OUT_AND_IN;
 
-    var navItem = document.createElement('li');
-    navItem.setAttribute('data-screen-id', 'page' + i);
-    navElement.appendChild(navItem);
+  // this.navigator.on('screenChange', this.onSubPageChange.bind(this));
+  
+  // this.navigator.on('transitionComplete', function(){
+  //   // console.log('transition complete');
+  // });
 
-    var navLink = document.createElement('a');
-    navLink.href = '#page' + i;
-    navItem.appendChild(navLink);
+  // for (var i = 0; i < 6; i++) {
+  //   this.navigator.addItem('page' + i, new HomeSubPage(subPagesContainer, i));
 
-    navLink.addEventListener('click', function(event){
-      event.preventDefault();
+  //   var navItem = document.createElement('li');
+  //   navItem.setAttribute('data-screen-id', 'page' + i);
+  //   navElement.appendChild(navItem);
 
-      var screenId = event.currentTarget.parentNode.getAttribute('data-screen-id');
+  //   var navLink = document.createElement('a');
+  //   navLink.href = '#page' + i;
+  //   navItem.appendChild(navLink);
 
-      that.navigator.showScreen(screenId);
-    });
-  };
+  //   navLink.addEventListener('click', function(event){
+  //     event.preventDefault();
 
-  this.navigator.showScreen('page0');
+  //     var screenId = event.currentTarget.parentNode.getAttribute('data-screen-id');
+
+  //     that.navigator.showScreen(screenId);
+  //   });
+  // };
+
+  // this.navigator.showScreen('page0');
 };
 
 inherits(Home, APage);

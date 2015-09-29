@@ -7,8 +7,8 @@ var Contact = function(){
 
 inherits(Contact, APage);
 
-Contact.prototype.animateIn = function() {
-  this.element.classList.add('active');
-};
+// Contact.prototype.animateIn = function() {
+//   this.element.classList.add('active');
+// };
 
 module.exports = Contact;

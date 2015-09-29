@@ -38,7 +38,7 @@ ScreenNavigatorItem.prototype.getScreen = function() {
 };
 
 ScreenNavigatorItem.prototype.disposeScreen = function() {
-  if (!this.canDispose) return;
+  if (!this.canDispose || !this.instance) return;
 
   this.instance.dispose();
   this.instance = null;
@@ -49,7 +49,11 @@ ScreenNavigatorItem.prototype.dispose = function() {
     this.instance.dispose();
   }
 
-  this.instance = this.screen = null;
+  this.instance = 
+  this.screen = 
+  this.arguments = 
+  this.properties = 
+  null;
 };
 
 module.exports = ScreenNavigatorItem;

@@ -1,31 +1,33 @@
 module.exports = function(newScreen, oldScreen, completeCallback){
-	var count = 0;
-
 	if (oldScreen) {
-		oldScreen.on('animateOutComplete', function onAnimOutComplete(){
-			if (newScreen) {
-				animIn();
-			}else{
-				onComplete();
-			}
-		});
+		oldScreen.on('animateOutComplete', onAnimOutComplete);
 
 		oldScreen.animateOut();
 	}else{
 		animIn();
 	}
 
-	function animIn(){
-		newScreen.on('animateInComplete', function onAnimInComplete(){
+	function onAnimOutComplete(){
+		if (newScreen) {
+			animIn();
+		}else{
 			onComplete();
-		});
+		}
+	}
+
+	function onAnimInComplete(){
+		onComplete();
+	}
+
+	function animIn(){
+		newScreen.on('animateInComplete', onAnimInComplete);
 
 		newScreen.animateIn();
 	}
 
 	function dispose(){
-		oldScreen.off('animateInComplete');
-		newScreen.off('animateInComplete');
+		if (oldScreen) oldScreen.off('animateOutComplete', onAnimOutComplete);
+		if (newScreen) newScreen.off('animateInComplete', onAnimInComplete);
 	}
 
 	function onComplete(){
@@ -35,6 +37,9 @@ module.exports = function(newScreen, oldScreen, completeCallback){
 	}
 
 	return function cancel(){
+		if (oldScreen) oldScreen.animateOut(true);
+		if (newScreen) newScreen.animateIn(true);
+
 		dispose();
 	};
 };

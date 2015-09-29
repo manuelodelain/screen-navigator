@@ -1,8 +1,11 @@
 var ScreenNavigator = require('../src/ScreenNavigator.js');
 var Home = require('./pages/Home.js');
 var About = require('./pages/About.js');
+var Transitions = require('../src/ScreenNavigator.js').Transitions;
 
 var navigator = new ScreenNavigator();
+
+navigator.transition = Transitions.outThenIn;
 
 // listen screens changes
 navigator.on('change', onPageChange);

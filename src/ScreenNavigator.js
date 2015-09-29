@@ -114,9 +114,9 @@ ScreenNavigator.prototype.dispose = function() {
   }
 };
 
+module.exports = ScreenNavigator;
+
 module.exports.AScreen = require('./AScreen.js');
 module.exports.ScreenNavigatorItem = ScreenNavigatorItem;
 module.exports.Transitions = Transitions;
-
-module.exports = ScreenNavigator;
 

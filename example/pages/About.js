@@ -9,8 +9,8 @@ var About = function(msg){
 
 inherits(About, APage);
 
-About.prototype.animateIn = function() {
-  this.element.classList.add('active');
-};
+// About.prototype.animateIn = function() {
+//   this.element.classList.add('active');
+// };
 
 module.exports = About;
