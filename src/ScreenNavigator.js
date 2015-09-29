@@ -109,8 +109,12 @@ ScreenNavigator.prototype.dispose = function() {
     this.onTransitionComplete(true);
   }
 
+  var item;
+
   for (var itemId in this.items){
-    this.items[itemId].dispose();
+    item = this.items[itemId];
+
+    if (typeof item.dispose === 'function') item.dispose();
   }
 };
 

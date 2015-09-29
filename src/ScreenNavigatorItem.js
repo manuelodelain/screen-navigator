@@ -40,13 +40,13 @@ ScreenNavigatorItem.prototype.getScreen = function() {
 ScreenNavigatorItem.prototype.disposeScreen = function() {
   if (!this.canDispose || !this.instance) return;
 
-  this.instance.dispose();
+  if (typeof this.instance.dispose === 'function') this.instance.dispose();
   this.instance = null;
 };
 
 ScreenNavigatorItem.prototype.dispose = function() {
   if (this.instance){
-    this.instance.dispose();
+    if (typeof this.instance.dispose === 'function') this.instance.dispose();
   }
 
   this.instance = 
