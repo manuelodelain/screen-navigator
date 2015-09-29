@@ -1,11 +1,10 @@
 {
   "name": "screen-navigator",
   "version": "0.0.1",
-  "description": "Navigate between screens",
+  "description": "Navigate easily between screens, with transitions.",
   "main": "src/ScreenNavigator.js",
   "scripts": {
-    "watch": "watchify example/index.js -o example/bundle.js -dv",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "watchify example/index.js -o example/bundle.js -dv"
   },
   "repository": {
     "type": "git",
@@ -14,11 +13,12 @@
   "keywords": [
     "screen",
     "page",
+    "navigator",
     "navigation",
     "animation",
     "transition"
   ],
-  "author": "",
+  "author": "Manuel Odelain",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/manuelodelain/screen-navigator/issues"
