@@ -2,6 +2,7 @@ var APage = require('./APage.js');
 var inherits = require('inherits');
 var ScreenNavigator = require('../../src/ScreenNavigator.js');
 var HomeSubPage = require('./home/HomeSubPage.js');
+var Transitions = ScreenNavigator.Transitions;
 
 var Home = function(){
   APage.call(this, 'home');
@@ -10,37 +11,37 @@ var Home = function(){
   var subPagesContainer = document.querySelector('.sub-pages-container');
   var navElement = document.querySelector('.sub-pages-nav ul');
 
-  // this.navigator = new ScreenNavigator();
+  this.navigator = new ScreenNavigator();
 
-  // this.navigator.defaultTransitionType = ScreenNavigator.TRANSITION_OUT_AND_IN;
+  this.navigator.transition = Transitions.outAndIn;
 
-  // this.navigator.on('screenChange', this.onSubPageChange.bind(this));
+  this.navigator.on('screenChange', this.onSubPageChange.bind(this));
   
-  // this.navigator.on('transitionComplete', function(){
-  //   // console.log('transition complete');
-  // });
+  this.navigator.on('transitionComplete', function(){
+    // console.log('transition complete');
+  });
 
-  // for (var i = 0; i < 6; i++) {
-  //   this.navigator.addItem('page' + i, new HomeSubPage(subPagesContainer, i));
+  for (var i = 0; i < 6; i++) {
+    this.navigator.addItem('page' + i, new HomeSubPage(subPagesContainer, i));
 
-  //   var navItem = document.createElement('li');
-  //   navItem.setAttribute('data-screen-id', 'page' + i);
-  //   navElement.appendChild(navItem);
+    var navItem = document.createElement('li');
+    navItem.setAttribute('data-screen-id', 'page' + i);
+    navElement.appendChild(navItem);
 
-  //   var navLink = document.createElement('a');
-  //   navLink.href = '#page' + i;
-  //   navItem.appendChild(navLink);
+    var navLink = document.createElement('a');
+    navLink.href = '#page' + i;
+    navItem.appendChild(navLink);
 
-  //   navLink.addEventListener('click', function(event){
-  //     event.preventDefault();
+    navLink.addEventListener('click', function(event){
+      event.preventDefault();
 
-  //     var screenId = event.currentTarget.parentNode.getAttribute('data-screen-id');
+      var screenId = event.currentTarget.parentNode.getAttribute('data-screen-id');
 
-  //     that.navigator.showScreen(screenId);
-  //   });
-  // };
+      that.navigator.showScreen(screenId);
+    });
+  };
 
-  // this.navigator.showScreen('page0');
+  this.navigator.showScreen('page0');
 };
 
 inherits(Home, APage);

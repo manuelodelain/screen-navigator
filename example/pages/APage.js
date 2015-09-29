@@ -16,7 +16,7 @@ APage.prototype.animateIn = function(cancel) {
 		return;
 	}
 
-  TweenMax.to(this.element, 1, {
+  TweenMax.to(this.element, .5, {
   	opacity: 1, 
   	onComplete: this.onAnimateInComplete.bind(this)
   });
@@ -33,7 +33,7 @@ APage.prototype.animateOut = function(cancel) {
 		return;
 	}
 
-	TweenMax.to(this.element, 1, {
+	TweenMax.to(this.element, .5, {
   	opacity: 0, 
   	onComplete: this.onAnimateOutComplete.bind(this)
   });
