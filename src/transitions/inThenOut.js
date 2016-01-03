@@ -39,9 +39,9 @@ module.exports = function(newScreen, oldScreen, completeCallback){
 	}
 
 	return function cancel(){
+		dispose();
+
 		if (oldScreen) oldScreen.animateOut(true);
 		if (newScreen) newScreen.animateIn(true);
-
-		dispose();
 	};
 };

@@ -27,9 +27,9 @@ module.exports = function(newScreen, oldScreen, onComplete){
 	}
 
 	return function cancel(){
+		dispose();
+
 		if (oldScreen) oldScreen.animateOut(true);
 		if (newScreen) newScreen.animateIn(true);
-
-		dispose();
 	}
 };
