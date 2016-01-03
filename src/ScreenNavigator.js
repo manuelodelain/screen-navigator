@@ -36,6 +36,10 @@ ScreenNavigator.prototype.showScreen = function(id, transition) {
     throw new Error('ScreenNavigator - the item with the id ' + id + ' doesn\'t exist');
   }
 
+  if (this.transitionRunning){
+    this.onTransitionComplete(true);
+  } 
+
   if (this.currentItemId){
     this.prevItemId = this.currentItemId;
   }
@@ -62,10 +66,6 @@ ScreenNavigator.prototype.clearScreen = function(transition) {
 
 ScreenNavigator.prototype.startTransition = function(transition) {
   transition = transition || this.transition;
-
-  if (this.transitionRunning){
-    this.onTransitionComplete(true);
-  } 
 
   var prevItem = this.getItem(this.prevItemId);
   var currentItem = this.getItem(this.currentItemId);
