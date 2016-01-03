@@ -21,6 +21,8 @@ ScreenNavigator.prototype.addItem = function(id, screen, options) {
   var item = new ScreenNavigatorItem(screen, options);
 
   this.items[id] = item;
+
+  return item;
 };
 
 ScreenNavigator.prototype.getItem = function(id) {
