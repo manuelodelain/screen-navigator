@@ -29,7 +29,7 @@ ScreenNavigator.prototype.getItem = function(id) {
   return this.items[id];
 };
 
-ScreenNavigator.prototype.showScreen = function(id, transition) {
+ScreenNavigator.prototype.showScreen = function(id, transition, options) {
   if (id === this.currentItemId) return;
 
   var currentItem = this.getItem(id);
@@ -50,7 +50,7 @@ ScreenNavigator.prototype.showScreen = function(id, transition) {
 
   this.onScreenChange();
 
-  this.startTransition(transition);
+  this.startTransition(transition, options);
 };
 
 ScreenNavigator.prototype.clearScreen = function(transition) {
@@ -66,13 +66,15 @@ ScreenNavigator.prototype.clearScreen = function(transition) {
   this.startTransition(transition);
 };
 
-ScreenNavigator.prototype.startTransition = function(transition) {
+ScreenNavigator.prototype.startTransition = function(transition, options) {
   transition = transition || this.transition;
 
   var prevItem = this.getItem(this.prevItemId);
   var currentItem = this.getItem(this.currentItemId);
 
-  var currentScreen = currentItem ? currentItem.getScreen() : null;
+  if (options) currentItem.setOptions(options);
+
+  var currentScreen = currentItem ? currentItem.getScreen(options) : null;
   var prevScreen = prevItem ? prevItem.getScreen() : null;
 
   this.transitionRunning = true;

@@ -9,6 +9,10 @@ var ScreenNavigatorItem = function(screen, options){
   this.properties = null;
   this.canDispose = !this.isInstance;
 
+  this.setOptions(options);
+};
+
+ScreenNavigatorItem.prototype.setOptions = function(options) {
   for (var optionKey in options){
     if (typeof this[optionKey] !== 'undefined') this[optionKey] = options[optionKey];
   }
@@ -17,15 +21,15 @@ var ScreenNavigatorItem = function(screen, options){
 ScreenNavigatorItem.prototype.getScreen = function() {
   if (!this.instance){
     var args = this.arguments;
-    var constructor = this.screen;
+    var ScreenClass = this.screen;
 
-    function F(){
-      constructor.apply(this, args);
+    function WrappedScreenClass(){
+      ScreenClass.apply(this, args);
     }
 
-    F.prototype = constructor.prototype;
+    WrappedScreenClass.prototype = ScreenClass.prototype;
 
-    this.instance = new F();
+    this.instance = new WrappedScreenClass();
   }
 
   if (this.properties){
