@@ -13,7 +13,13 @@ navigator.on('change', onPageChange);
 // ADD SCREENS
 // 
 // add screen instance
-navigator.addItem('home', new Home()); 
+navigator.addItem('home', new Home(), {
+  events: {
+    animateInComplete: function(){
+      console.log('animateInComplete');
+    }
+  }
+}); 
 // 
 // add screen class with options
 navigator.addItem('about', About, {

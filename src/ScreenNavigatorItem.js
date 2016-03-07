@@ -8,6 +8,7 @@ var ScreenNavigatorItem = function(screen, options){
   this.arguments = null;
   this.properties = null;
   this.canDispose = !this.isInstance;
+  this.events = null;
 
   this.setOptions(options);
 };
@@ -38,22 +39,42 @@ ScreenNavigatorItem.prototype.getScreen = function() {
     }
   }
 
+  if (this.events) this.addEventsListeners();
+
   return this.instance;
 };
 
-ScreenNavigatorItem.prototype.disposeScreen = function() {
-  if (!this.canDispose || !this.instance) return;
+ScreenNavigatorItem.prototype.addEventsListeners = function() {
+  for (var eventName in this.events){
+    if (typeof this.events[eventName] === 'function'){
+      this.instance.on(eventName, this.events[eventName]);
+    }
+  }
+};
+
+ScreenNavigatorItem.prototype.removeEventsListeners = function() {
+  for (var eventName in this.events){
+    if (typeof this.events[eventName] === 'function'){
+      this.instance.off(eventName, this.events[eventName]);
+    }
+  }
+};
+
+ScreenNavigatorItem.prototype.disposeScreen = function(forceDispose) {
+  if (!this.instance) return;
+
+  if (this.events) this.removeEventsListeners();
+
+  if (!forceDispose && !this.canDispose) return;
 
   if (typeof this.instance.dispose === 'function') this.instance.dispose();
+  
   this.instance = null;
 };
 
 ScreenNavigatorItem.prototype.dispose = function() {
-  if (this.instance){
-    if (typeof this.instance.dispose === 'function') this.instance.dispose();
-  }
+  this.disposeScreen(true);
 
-  this.instance = 
   this.screen = 
   this.arguments = 
   this.properties = 
