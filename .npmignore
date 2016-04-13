@@ -1,4 +1,5 @@
 node_modules/
+example/
 
 .DS_Store
 npm-debug.log
