@@ -2,7 +2,6 @@ var ScreenNavigatorItem = function(screen, options){
   this.screen = screen;
 
   this.isInstance = typeof screen !== 'function';
-  this.instance = this.isInstance ? screen : null;
 
   // default options
   this.arguments = null;
@@ -20,7 +19,11 @@ ScreenNavigatorItem.prototype.setOptions = function(options) {
 };
 
 ScreenNavigatorItem.prototype.getScreen = function() {
-  if (!this.instance){
+  var instance;
+
+  if (this.isInstance){
+    instance = this.screen;
+  }else{
     var args = this.arguments;
     var ScreenClass = this.screen;
 
@@ -30,54 +33,49 @@ ScreenNavigatorItem.prototype.getScreen = function() {
 
     WrappedScreenClass.prototype = ScreenClass.prototype;
 
-    this.instance = new WrappedScreenClass();
+    instance = new WrappedScreenClass();
   }
 
   if (this.properties){
     for (var key in this.properties){
-      this.instance[key] = this.properties[key];
+      instance[key] = this.properties[key];
     }
   }
 
-  if (this.events) this.addEventsListeners();
+  if (this.events) this.addEventsListeners(instance);
 
-  return this.instance;
+  return instance;
 };
 
-ScreenNavigatorItem.prototype.addEventsListeners = function() {
+ScreenNavigatorItem.prototype.addEventsListeners = function(instance) {
   for (var eventName in this.events){
     if (typeof this.events[eventName] === 'function'){
-      this.instance.on(eventName, this.events[eventName]);
+      instance.on(eventName, this.events[eventName]);
     }
   }
 };
 
-ScreenNavigatorItem.prototype.removeEventsListeners = function() {
+ScreenNavigatorItem.prototype.removeEventsListeners = function(instance) {
   for (var eventName in this.events){
     if (typeof this.events[eventName] === 'function'){
-      this.instance.off(eventName, this.events[eventName]);
+      instance.off(eventName, this.events[eventName]);
     }
   }
 };
 
-ScreenNavigatorItem.prototype.disposeScreen = function(forceDispose) {
-  if (!this.instance) return;
-
-  if (this.events) this.removeEventsListeners();
+ScreenNavigatorItem.prototype.disposeScreen = function(instance, forceDispose) {
+  if (this.events) this.removeEventsListeners(instance);
 
   if (!forceDispose && !this.canDispose) return;
 
-  if (typeof this.instance.dispose === 'function') this.instance.dispose();
-  
-  this.instance = null;
+  if (typeof instance.dispose === 'function') instance.dispose();
 };
 
 ScreenNavigatorItem.prototype.dispose = function() {
-  this.disposeScreen(true);
-
   this.screen = 
   this.arguments = 
   this.properties = 
+  this.events = 
   null;
 };
 

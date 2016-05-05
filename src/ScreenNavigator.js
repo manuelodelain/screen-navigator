@@ -5,8 +5,12 @@ var Transitions = require('./Transitions.js');
 
 var ScreenNavigator = function(){
   this.items = {};
+
   this.currentItemId = null;
-  this.prevItemId = null;
+  this.previousItemId = null;
+
+  this.currentScreen = null;
+  this.previousScreen = null;
 
   this.transition = ScreenNavigator.defaultTransition;
   this.transitionRunning = false;
@@ -30,11 +34,7 @@ ScreenNavigator.prototype.getItem = function(id) {
 };
 
 ScreenNavigator.prototype.showScreen = function(id, transition, options) {
-  if (id === this.currentItemId) return;
-
-  var currentItem = this.getItem(id);
-
-  if (!currentItem){
+  if (!this.getItem(id)){
     throw new Error('ScreenNavigator - the item with the id ' + id + ' doesn\'t exist');
   }
 
@@ -42,8 +42,9 @@ ScreenNavigator.prototype.showScreen = function(id, transition, options) {
     this.onTransitionComplete(true);
   } 
 
-  if (this.currentItemId){
-    this.prevItemId = this.currentItemId;
+  if (this.currentScreen){
+    this.previousItemId = this.currentItemId;
+    this.previousScreen = this.currentScreen;
   }
 
   this.currentItemId = id;
@@ -59,6 +60,8 @@ ScreenNavigator.prototype.clearScreen = function(transition) {
   }
 
   this.prevScreenId = this.currentScreenId;
+  this.previousScreen = this.currentScreen;
+
   this.currentScreenId = null;
 
   this.onScreenChange();
@@ -69,40 +72,42 @@ ScreenNavigator.prototype.clearScreen = function(transition) {
 ScreenNavigator.prototype.startTransition = function(transition, options) {
   transition = transition || this.transition;
 
-  var prevItem = this.getItem(this.prevItemId);
   var currentItem = this.getItem(this.currentItemId);
 
   if (options) currentItem.setOptions(options);
 
-  var currentScreen = currentItem ? currentItem.getScreen(options) : null;
-  var prevScreen = prevItem ? prevItem.getScreen() : null;
+  this.currentScreen = currentItem ? currentItem.getScreen(options) : null;
 
   this.transitionRunning = true;
 
   this.emit('transitionStart');
 
-  this.transitionCancel = transition(currentScreen, prevScreen, this.onTransitionComplete.bind(this));
+  this.transitionCancel = transition(this.currentScreen, this.previousScreen, this.onTransitionComplete.bind(this));
 };
 
 ScreenNavigator.prototype.onScreenChange = function() {
   this.emit('screenChange');
 };
 
-ScreenNavigator.prototype.onTransitionComplete = function(cancelTransition) {
+ScreenNavigator.prototype.onTransitionComplete = function(cancelTransition, silent) {
   this.transitionRunning = false;
-
-  var prevItem = this.getItem(this.prevItemId);
 
   if (cancelTransition){
     if (this.transitionCancel) this.transitionCancel();
   }
 
-  if (prevItem) prevItem.disposeScreen();
+  if (this.previousScreen) {
+    this.getItem(this.previousItemId).disposeScreen(this.previousScreen, true);
 
-  if (cancelTransition){
-    this.emit('transitionCancel');
-  }else{
-    this.emit('transitionComplete');
+    this.previousScreen = null;
+  }
+
+  if (!silent){
+    if (cancelTransition){
+      this.emit('transitionCancel');
+    }else{
+      this.emit('transitionComplete');
+    }
   }
 
   this.transitionCancel = null;
@@ -110,15 +115,19 @@ ScreenNavigator.prototype.onTransitionComplete = function(cancelTransition) {
 
 ScreenNavigator.prototype.dispose = function() {
   if (this.transitionRunning){
-    this.onTransitionComplete(true);
+    this.onTransitionComplete(true, true);
+  }
+
+  if (this.currentScreen) {
+    this.getItem(this.currentScreenId).disposeScreen(this.currentScreen, true);
+
+    this.currentScreen = null;
   }
 
   var item;
 
   for (var itemId in this.items){
-    item = this.items[itemId];
-
-    if (typeof item.dispose === 'function') item.dispose();
+    this.items[itemId].dispose();
   }
 };
 

@@ -11,7 +11,7 @@ navigator.transition = Transitions.outThenIn;
 navigator.on('change', onPageChange);
 
 // ADD SCREENS
-// 
+
 // add screen instance
 navigator.addItem('home', new Home(), {
   events: {
@@ -20,14 +20,14 @@ navigator.addItem('home', new Home(), {
     }
   }
 }); 
-// 
+
 // add screen class with options
 navigator.addItem('about', About, {
 	arguments: ['my message'], // constructor arguments
 	properties: {}, // set properties at the screen initialization
 	canDispose: false
 }); 
-// 
+
 // add screen class
 navigator.addItem('contact', require('./pages/Contact.js')); 
 
