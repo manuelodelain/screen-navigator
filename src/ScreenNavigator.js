@@ -97,7 +97,7 @@ ScreenNavigator.prototype.onTransitionComplete = function(cancelTransition, sile
   }
 
   if (this.previousScreen) {
-    this.getItem(this.previousItemId).disposeScreen(this.previousScreen, true);
+    this.getItem(this.previousItemId).disposeScreen(this.previousScreen);
 
     this.previousScreen = null;
   }
