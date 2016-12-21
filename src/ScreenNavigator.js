@@ -59,7 +59,7 @@ ScreenNavigator.prototype.clearScreen = function(transition) {
     return;
   }
 
-  this.prevScreenId = this.currentItemId;
+  this.previousItemId = this.currentItemId;
   this.previousScreen = this.currentScreen;
 
   this.currentItemId = null;
