@@ -59,10 +59,10 @@ ScreenNavigator.prototype.clearScreen = function(transition) {
     return;
   }
 
-  this.prevScreenId = this.currentScreenId;
+  this.prevScreenId = this.currentItemId;
   this.previousScreen = this.currentScreen;
 
-  this.currentScreenId = null;
+  this.currentItemId = null;
 
   this.onScreenChange();
 
@@ -119,7 +119,7 @@ ScreenNavigator.prototype.dispose = function() {
   }
 
   if (this.currentScreen) {
-    this.getItem(this.currentScreenId).disposeScreen(this.currentScreen, true);
+    this.getItem(this.currentItemId).disposeScreen(this.currentScreen, true);
 
     this.currentScreen = null;
   }
