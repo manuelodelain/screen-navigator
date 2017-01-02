@@ -95,12 +95,8 @@ ScreenNavigator.prototype.onTransitionComplete = function(cancelTransition, sile
   if (cancelTransition){
     if (this.transitionCancel) this.transitionCancel();
   }
-
-  if (this.previousScreen) {
-    this.getItem(this.previousItemId).disposeScreen(this.previousScreen);
-
-    this.previousScreen = null;
-  }
+  
+  this.disposePreviousScreen();
 
   if (!silent){
     if (cancelTransition){
@@ -113,22 +109,41 @@ ScreenNavigator.prototype.onTransitionComplete = function(cancelTransition, sile
   this.transitionCancel = null;
 };
 
-ScreenNavigator.prototype.dispose = function() {
+ScreenNavigator.prototype.dispose = function(forceDispose) {
+  if (typeof forceDispose !== 'boolean') forceDispose = true;
+
   if (this.transitionRunning){
     this.onTransitionComplete(true, true);
   }
 
-  if (this.currentScreen) {
-    this.getItem(this.currentItemId).disposeScreen(this.currentScreen, true);
-
-    this.currentScreen = null;
-  }
+  this.disposeCurrentScreen();
+  this.disposePreviousScreen();
 
   var item;
 
   for (var itemId in this.items){
-    this.items[itemId].dispose();
+    this.items[itemId].dispose(forceDispose);
+
+    delete this.items[itemId];
   }
+
+  this.transition = null;
+};
+
+ScreenNavigator.prototype.disposePreviousScreen = function() {
+  if (!this.previousScreen) return;
+
+  this.getItem(this.previousItemId).disposeScreen(this.previousScreen);
+
+  this.previousScreen = null;
+};
+
+ScreenNavigator.prototype.disposeCurrentScreen = function() {
+  if (!this.currentScreen) return;
+
+  this.getItem(this.currentItemId).disposeScreen(this.currentScreen);
+
+  this.currentScreen = null;
 };
 
 module.exports = ScreenNavigator;

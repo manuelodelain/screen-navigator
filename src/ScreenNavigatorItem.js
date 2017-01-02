@@ -2,6 +2,7 @@ var ScreenNavigatorItem = function(screen, options){
   this.screen = screen;
 
   this.isInstance = typeof screen !== 'function';
+  this.internalInstance = null;
 
   // default options
   this.arguments = null;
@@ -23,7 +24,9 @@ ScreenNavigatorItem.prototype.getScreen = function() {
 
   if (this.isInstance){
     instance = this.screen;
-  }else{
+  } else if (this.internalInstance){
+    instance = this.internalInstance;
+  } else {
     var args = this.arguments;
     var ScreenClass = this.screen;
 
@@ -34,6 +37,8 @@ ScreenNavigatorItem.prototype.getScreen = function() {
     WrappedScreenClass.prototype = ScreenClass.prototype;
 
     instance = new WrappedScreenClass();
+
+    if (!this.canDispose) this.internalInstance = instance;
   }
 
   if (this.properties){
@@ -69,10 +74,21 @@ ScreenNavigatorItem.prototype.disposeScreen = function(instance, forceDispose) {
   if (!forceDispose && !this.canDispose) return;
 
   if (typeof instance.dispose === 'function') instance.dispose();
+
+  this.internalInstance = null;
 };
 
-ScreenNavigatorItem.prototype.dispose = function() {
+ScreenNavigatorItem.prototype.dispose = function(forceDispose) {
+  if (typeof forceDispose !== 'boolean') forceDispose = true;
+
+  var instance = this.isInstance ? this.screen : this.internalInstance;
+
+  if (instance){
+    this.disposeScreen(instance, forceDispose);
+  }
+  
   this.screen = 
+  this.internalInstance = 
   this.arguments = 
   this.properties = 
   this.events = 

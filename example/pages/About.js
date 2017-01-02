@@ -3,7 +3,7 @@ var inherits = require('inherits');
 
 var About = function(msg){
 	console.log(msg);
-	
+
 	APage.call(this, 'about');
 };
 
