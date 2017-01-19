@@ -10,6 +10,8 @@ var ScreenNavigatorItem = function(screen, options){
   this.canDispose = !this.isInstance;
   this.events = null;
 
+  this.hasEventsListeners = false;
+
   this.setOptions(options);
 };
 
@@ -47,12 +49,14 @@ ScreenNavigatorItem.prototype.getScreen = function() {
     }
   }
 
-  if (this.events) this.addEventsListeners(instance);
+  if (this.events && !this.hasEventsListeners) this.addEventsListeners(instance);
 
   return instance;
 };
 
 ScreenNavigatorItem.prototype.addEventsListeners = function(instance) {
+  this.hasEventsListeners = true;
+
   for (var eventName in this.events){
     if (typeof this.events[eventName] === 'function'){
       instance.on(eventName, this.events[eventName]);
@@ -61,6 +65,8 @@ ScreenNavigatorItem.prototype.addEventsListeners = function(instance) {
 };
 
 ScreenNavigatorItem.prototype.removeEventsListeners = function(instance) {
+  this.hasEventsListeners = false;
+
   for (var eventName in this.events){
     if (typeof this.events[eventName] === 'function'){
       instance.off(eventName, this.events[eventName]);
