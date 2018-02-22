@@ -49,13 +49,17 @@ ScreenNavigatorItem.prototype.getScreen = function() {
     }
   }
 
-  if (this.events && !this.hasEventsListeners) this.addEventsListeners(instance);
+  if (this.events) this.addEventsListeners(instance);
 
   return instance;
 };
 
 ScreenNavigatorItem.prototype.addEventsListeners = function(instance) {
-  this.hasEventsListeners = true;
+  if (!this.canDispose){
+    if (this.hasEventsListeners) return;
+
+    this.hasEventsListeners = true;
+  }
 
   for (var eventName in this.events){
     if (typeof this.events[eventName] === 'function'){
