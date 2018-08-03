@@ -5,6 +5,8 @@ import AScreen from './AScreen';
 
 export default class ScreenNavigator extends EventEmitter {
   constructor () {
+    super();
+    
     this.items = {};
 
     this.currentItemId = null;

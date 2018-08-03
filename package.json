@@ -4,7 +4,7 @@
   "description": "Navigate easily between screens, with transitions.",
   "main": "src/ScreenNavigator.js",
   "scripts": {
-    "watch": "watchify example/index.js -o example/bundle.js -dv"
+    "dev": "watchify example/index.js -t babelify -o example/bundle.js -dv"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,9 @@
     "tiny-emitter": "^2.0.2"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babelify": "^8.0.0",
     "browserify": "^16.2.2",
     "http-server": "^0.11.1",
     "uglifyjs": "^2.4.10",
