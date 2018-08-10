@@ -4,7 +4,7 @@
   "description": "Navigate easily between screens, with transitions.",
   "main": "src/ScreenNavigator.js",
   "scripts": {
-    "dev": "watchify example/index.js -t babelify -o example/bundle.js -dv"
+    "dev": "watchify src/ScreenNavigator.js -t babelify -o dist/screen-navigator.js -dv"
   },
   "repository": {
     "type": "git",
