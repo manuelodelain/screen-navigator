@@ -1,8 +1,8 @@
-module.exports = {
-	none: require('./transitions/none.js'),
-	outAndIn: require('./transitions/outAndIn.js'),
-	outThenIn: require('./transitions/outThenIn.js'),
-	inThenOut: require('./transitions/inThenOut.js'),
-	in: require('./transitions/in.js'),
-	out: require('./transitions/out.js')
-};
+import None from './transitions/None.js';
+import In from './transitions/In.js';
+import Out from './transitions/Out.js';
+import OutAndIn from './transitions/OutAndIn.js';
+import OutThenIn from './transitions/OutThenIn.js';
+import InThenOut from './transitions/InThenOut.js';
+
+export default {None, In, Out, InThenOut, OutAndIn, OutThenIn}

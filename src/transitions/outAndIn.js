@@ -1,33 +1,13 @@
-module.exports = function(newScreen, oldScreen, onComplete){
-	var count = 0;
-	var maxCount = 0;
+export default function(newScreen, oldScreen, completeCallback) {
+	let promises = [];
 
-	if (oldScreen) maxCount++;
-	if (newScreen) maxCount++;
+	if (oldScreen) promises.push(oldScreen.animateOut());
+	if (newScreen) promises.push(newScreen.animateIn());
 
-	if (oldScreen) {
-		oldScreen.on('animateOutComplete', onAnimComplete);
-		oldScreen.animateOut();
-	}
-
-	if (newScreen) {
-		newScreen.on('animateInComplete', onAnimComplete);
-		newScreen.animateIn();
-	}
-
-	function onAnimComplete(){
-		count++;
-
-		if (count === maxCount) onComplete();
-	}
-
-	function dispose(){
-		if (oldScreen) oldScreen.off('animateOutComplete', onAnimComplete);
-		if (newScreen) newScreen.off('animateOutComplete', onAnimComplete);
-	}
+	Promise.all(promises).then(completeCallback);
 
 	return function cancel(){
-		dispose();
+		promises.forEach(promise => promise.reject('canceled'))
 
 		if (oldScreen) oldScreen.animateOut(true);
 		if (newScreen) newScreen.animateIn(true);

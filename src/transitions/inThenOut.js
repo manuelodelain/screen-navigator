@@ -1,45 +1,13 @@
-module.exports = function(newScreen, oldScreen, completeCallback){
-	if (newScreen) {
-		newScreen.on('animateInComplete', onAnimInComplete);
-		newScreen.animateIn();
-	}else{
-		animOut();
-	}
+export default function(newScreen, oldScreen, completeCallback) {
+	let promise = new Promise();
 
-	function animOut(){
-		if (oldScreen){
-			oldScreen.on('animateOutComplete', onAnimOutComplete);
-			oldScreen.animateOut();
-		}else{
-			onComplete();
-		}
-	}
+	if (newScreen) promise.then(newScreen.animateIn());
+	if (oldScreen) promise.then(oldScreen.animateOut());
 
-	function dispose(){
-		if (oldScreen) oldScreen.off('animateOutComplete', onAnimOutComplete);
-		if (newScreen) newScreen.off('animateInComplete', onAnimInComplete);
-	}
-
-	function onAnimInComplete(){
-		if (oldScreen) {
-			animOut();
-		}else{
-			onComplete();
-		}
-	}
-
-	function onAnimOutComplete(){
-		onComplete();
-	}
-
-	function onComplete(){
-		dispose();
-
-		completeCallback();
-	}
+	promise.then(completeCallback);
 
 	return function cancel(){
-		dispose();
+		promise.reject('canceled');
 
 		if (oldScreen) oldScreen.animateOut(true);
 		if (newScreen) newScreen.animateIn(true);

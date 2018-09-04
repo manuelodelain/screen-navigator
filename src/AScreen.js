@@ -1,28 +1,37 @@
-var TinyEmitter = require('tiny-emitter');
-var inherits = require('inherits');
+import EventEmitter from 'tiny-emitter';
 
-var AScreen = function(){
-};
+export default class AScreen extends EventEmitter {
+  dispose () {
+  }
 
-inherits(AScreen, TinyEmitter);
+  animateIn (cancelTransition = false) {
+    return new Promise(resolve => {
+      if (cancelTransition) this.cancelAnimIn(resolve);
+      else this.createAnimIn(resolve);
+    });
+  }
 
-AScreen.prototype.animateIn = function(cancel) {
-};
+  createAnimIn (onComplete) {
+    onComplete();
+  }
 
-AScreen.prototype.onAnimateInComplete = function() {
-  this.emit('animateInComplete');
-};
+  cancelAnimIn (onComplete) {
+    onComplete();
+  }
+  
+  animateOut (cancelTransition = false) {
+    return new Promise(resolve => {
+      if (cancelTransition) this.cancelAnimOut(resolve);
+      else this.createAnimOut(resolve);
+    });
+  }
 
-AScreen.prototype.animateOut = function(cancel) {
-};
+  createAnimOut (onComplete) {
+    onComplete();
+  }
 
-AScreen.prototype.onAnimateOutComplete = function() {
-  this.emit('animateOutComplete');
-};
+  cancelAnimOut (onComplete) {
+    onComplete();
+  }
+}
 
-AScreen.prototype.dispose = function() {
-  this.off('animateInComplete')
-      .off('animateOutComplete');
-};
-
-module.exports = AScreen;

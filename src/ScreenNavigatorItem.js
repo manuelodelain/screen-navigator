@@ -1,112 +1,102 @@
-var ScreenNavigatorItem = function(screen, options){
-  this.screen = screen;
+export default class ScreenNavigatorItem {
+  constructor (screen, options) {
+    this.screen = screen;
 
-  this.isInstance = typeof screen !== 'function';
-  this.internalInstance = null;
+    this.isInstance = typeof screen !== 'function';
+    this.internalInstance = null;
 
-  // default options
-  this.arguments = null;
-  this.properties = null;
-  this.canDispose = !this.isInstance;
-  this.events = null;
+    // default options
+    this.arguments = null;
+    this.properties = null;
+    this.canDispose = !this.isInstance;
+    this.events = null;
 
-  this.hasEventsListeners = false;
+    this.hasEventsListeners = false;
 
-  this.setOptions(options);
-};
-
-ScreenNavigatorItem.prototype.setOptions = function(options) {
-  for (var optionKey in options){
-    if (typeof this[optionKey] !== 'undefined') this[optionKey] = options[optionKey];
-  }
-};
-
-ScreenNavigatorItem.prototype.getScreen = function() {
-  var instance;
-
-  if (this.isInstance){
-    instance = this.screen;
-  } else if (this.internalInstance){
-    instance = this.internalInstance;
-  } else {
-    // var args = this.arguments;
-    const args = this.arguments || [];
-    // var ScreenClass = this.screen;
-
-    // function WrappedScreenClass(){
-    //   ScreenClass.apply(this, args);
-    // }
-
-    // WrappedScreenClass.prototype = ScreenClass.prototype;
-
-    // instance = new WrappedScreenClass();
-
-    instance = new this.screen(...args);
-
-    if (!this.canDispose) this.internalInstance = instance;
-  }
-
-  if (this.properties){
-    for (var key in this.properties){
-      instance[key] = this.properties[key];
-    }
-  }
-
-  if (this.events) this.addEventsListeners(instance);
-
-  return instance;
-};
-
-ScreenNavigatorItem.prototype.addEventsListeners = function(instance) {
-  if (!this.canDispose){
-    if (this.hasEventsListeners) return;
-
-    this.hasEventsListeners = true;
-  }
-
-  for (var eventName in this.events){
-    if (typeof this.events[eventName] === 'function'){
-      instance.on(eventName, this.events[eventName]);
-    }
-  }
-};
-
-ScreenNavigatorItem.prototype.removeEventsListeners = function(instance) {
-  this.hasEventsListeners = false;
-
-  for (var eventName in this.events){
-    if (typeof this.events[eventName] === 'function'){
-      instance.off(eventName, this.events[eventName]);
-    }
-  }
-};
-
-ScreenNavigatorItem.prototype.disposeScreen = function(instance, forceDispose) {
-  if (this.events) this.removeEventsListeners(instance);
-
-  if (!forceDispose && !this.canDispose) return;
-
-  if (typeof instance.dispose === 'function') instance.dispose();
-
-  this.internalInstance = null;
-};
-
-ScreenNavigatorItem.prototype.dispose = function(forceDispose) {
-  if (typeof forceDispose !== 'boolean') forceDispose = true;
-
-  var instance = this.isInstance ? this.screen : this.internalInstance;
-
-  if (instance){
-    this.disposeScreen(instance, forceDispose);
+    this.setOptions(options);
   }
   
-  this.screen = 
-  this.internalInstance = 
-  this.arguments = 
-  this.properties = 
-  this.events = 
-  null;
-};
+  setOptions (options) {
+    for (let optionKey in options){
+      if (typeof this[optionKey] !== 'undefined') this[optionKey] = options[optionKey];
+    }
+  }
 
-module.exports = ScreenNavigatorItem;
+  getScreen () {
+    let instance;
+
+    if (this.isInstance){
+      instance = this.screen;
+    } else if (this.internalInstance){
+      instance = this.internalInstance;
+    } else {
+      const args = this.arguments || [];
+
+      instance = new this.screen(...args);
+
+      if (!this.canDispose) this.internalInstance = instance;
+    }
+
+    if (this.properties){
+      for (let key in this.properties){
+        instance[key] = this.properties[key];
+      }
+    }
+
+    if (this.events) this.addEventsListeners(instance);
+
+    return instance;
+  }
+
+  addEventsListeners (instance) {
+    if (!this.canDispose){
+      if (this.hasEventsListeners) return;
+  
+      this.hasEventsListeners = true;
+    }
+  
+    for (let eventName in this.events){
+      if (typeof this.events[eventName] === 'function'){
+        instance.on(eventName, this.events[eventName]);
+      }
+    }
+  }
+
+  removeEventsListeners (instance) {
+    this.hasEventsListeners = false;
+
+    for (let eventName in this.events){
+      if (typeof this.events[eventName] === 'function'){
+        instance.off(eventName, this.events[eventName]);
+      }
+    }
+  }
+
+  disposeScreen (instance, forceDispose) {
+    if (this.events) this.removeEventsListeners(instance);
+
+    if (!forceDispose && !this.canDispose) return;
+
+    if (typeof instance.dispose === 'function') instance.dispose();
+
+    this.internalInstance = null;
+  }
+
+  dispose (forceDispose) {
+    if (typeof forceDispose !== 'boolean') forceDispose = true;
+
+    let instance = this.isInstance ? this.screen : this.internalInstance;
+
+    if (instance){
+      this.disposeScreen(instance, forceDispose);
+    }
+    
+    this.screen = 
+    this.internalInstance = 
+    this.arguments = 
+    this.properties = 
+    this.events = 
+    null;
+  }
+}
 

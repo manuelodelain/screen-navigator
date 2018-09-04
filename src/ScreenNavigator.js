@@ -6,7 +6,7 @@ import AScreen from './AScreen'
 export {Transitions, AScreen}
 
 export default class ScreenNavigator extends EventEmitter {
-  static defaultTransition = Transitions.none;
+  static defaultTransition = Transitions.None;
 
   constructor () {
     super();

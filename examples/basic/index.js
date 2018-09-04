@@ -1,4 +1,6 @@
 const screenNavigator = new ScreenNavigator();
+screenNavigator.transition = ScreenNavigator.Transitions.OutThenIn;
+
 
 // this class will be instancied for each screen displayed
 class Screen extends ScreenNavigator.AScreen {
@@ -9,17 +11,20 @@ class Screen extends ScreenNavigator.AScreen {
     }
 
     // show screen
-    animateIn () {
-        super.animateIn();
-
+    createAnimIn (onComplete) {
         this.element.style.display = 'block';
+        
+        onComplete();
     }
     
     // hide screen
-    animateOut () {
-        super.animateOut();
-
+    createAnimOut (onComplete) {
         this.element.style.display = '';
+
+        setTimeout(() => {
+
+            onComplete();
+        }, 5000);
     }
 }
 
