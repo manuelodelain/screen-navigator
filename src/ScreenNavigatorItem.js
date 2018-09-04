@@ -29,16 +29,19 @@ ScreenNavigatorItem.prototype.getScreen = function() {
   } else if (this.internalInstance){
     instance = this.internalInstance;
   } else {
-    var args = this.arguments;
-    var ScreenClass = this.screen;
+    // var args = this.arguments;
+    const args = this.arguments || [];
+    // var ScreenClass = this.screen;
 
-    function WrappedScreenClass(){
-      ScreenClass.apply(this, args);
-    }
+    // function WrappedScreenClass(){
+    //   ScreenClass.apply(this, args);
+    // }
 
-    WrappedScreenClass.prototype = ScreenClass.prototype;
+    // WrappedScreenClass.prototype = ScreenClass.prototype;
 
-    instance = new WrappedScreenClass();
+    // instance = new WrappedScreenClass();
+
+    instance = new this.screen(...args);
 
     if (!this.canDispose) this.internalInstance = instance;
   }

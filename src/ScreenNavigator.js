@@ -6,6 +6,8 @@ import AScreen from './AScreen'
 export {Transitions, AScreen}
 
 export default class ScreenNavigator extends EventEmitter {
+  static defaultTransition = Transitions.none;
+
   constructor () {
     super();
     
@@ -20,8 +22,6 @@ export default class ScreenNavigator extends EventEmitter {
     this.transition = ScreenNavigator.defaultTransition;
     this.transitionRunning = false;
     this.transitionCancel = null;
-
-    ScreenNavigator.defaultTransition = Transitions.none;
   }
   
   addItem (id, screen, options) {

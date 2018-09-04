@@ -12,13 +12,17 @@
       padding: 0;
       overflow: hidden;
     }
+
+    .screen{
+      display: none;
+    }
   </style>
 </head>
 <body>
   <nav>
     <ul>
-      <li><button>Screen 1</button></li>
-      <li><button>Screen 2</button></li>
+      <li><button class="screen-btn" data-screen="screen-1">Screen 1</button></li>
+      <li><button class="screen-btn" data-screen="screen-2">Screen 2</button></li>
     </ul>
   </nav>
 
@@ -26,8 +30,8 @@
     <h1>Screen 1</h1>
   </section>
 
-  <section class="screen" id="screen-1">
-    <h1>Screen 1</h1>
+  <section class="screen" id="screen-2">
+    <h1>Screen 2</h1>
   </section>
 
   <script src="../../dist/screen-navigator.js"></script>
