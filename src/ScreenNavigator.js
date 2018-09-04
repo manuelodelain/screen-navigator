@@ -1,7 +1,9 @@
 import EventEmitter from 'tiny-emitter';
 import ScreenNavigatorItem from './ScreenNavigatorItem';
 import Transitions from './Transitions';
-import AScreen from './AScreen';
+import AScreen from './AScreen'
+
+export {Transitions, AScreen}
 
 export default class ScreenNavigator extends EventEmitter {
   constructor () {
