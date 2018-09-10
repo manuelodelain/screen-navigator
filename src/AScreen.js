@@ -11,12 +11,12 @@ export default class AScreen extends EventEmitter {
     });
   }
 
-  createAnimIn (onComplete) {
-    onComplete();
+  createAnimIn (resolvePromise) {
+    resolvePromise();
   }
 
-  cancelAnimIn (onComplete) {
-    onComplete();
+  cancelAnimIn (resolvePromise) {
+    resolvePromise();
   }
   
   animateOut (cancelTransition = false) {
@@ -26,12 +26,12 @@ export default class AScreen extends EventEmitter {
     });
   }
 
-  createAnimOut (onComplete) {
-    onComplete();
+  createAnimOut (resolvePromise) {
+    resolvePromise();
   }
 
-  cancelAnimOut (onComplete) {
-    onComplete();
+  cancelAnimOut (resolvePromise) {
+    resolvePromise();
   }
 }
 

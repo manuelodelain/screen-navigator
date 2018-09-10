@@ -1,6 +1,4 @@
 const screenNavigator = new ScreenNavigator();
-screenNavigator.transition = ScreenNavigator.Transitions.OutThenIn;
-
 
 // this class will be instancied for each screen displayed
 class Screen extends ScreenNavigator.AScreen {
@@ -8,29 +6,30 @@ class Screen extends ScreenNavigator.AScreen {
         super();
         
         this.element = document.querySelector('#' + id);
+
+        this.animTimeout = null;
     }
 
     // show screen
-    createAnimIn (onComplete) {
+    createAnimIn (resolvePromise) {
         this.element.style.display = 'block';
-        
-        onComplete();
+
+        resolvePromise();
     }
-    
+
     // hide screen
-    createAnimOut (onComplete) {
+    createAnimOut (resolvePromise) {
         this.element.style.display = '';
 
-        setTimeout(() => {
-
-            onComplete();
-        }, 5000);
+        resolvePromise();
     }
 }
 
 // button click handler
 function onScreenBtnClick (event) {
     const screenId = event.currentTarget.getAttribute('data-screen');
+
+    if (screenId === screenNavigator.currentItemId) return;
 
     screenNavigator.showScreen(screenId);
 }

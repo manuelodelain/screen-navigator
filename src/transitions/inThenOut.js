@@ -1,13 +1,15 @@
 export default function(newScreen, oldScreen, completeCallback) {
-	let promise = new Promise();
+	function cancelPromise() {
+		return Promise.reject('cancel transition').catch(function (error) {});
+	};
 
-	if (newScreen) promise.then(newScreen.animateIn());
-	if (oldScreen) promise.then(oldScreen.animateOut());
-
-	promise.then(completeCallback);
+	Promise.resolve()
+		.then(newScreen && newScreen.animateIn.bind(newScreen), cancelPromise)
+		.then(oldScreen && oldScreen.animateOut.bind(oldScreen), cancelPromise)
+		.then(completeCallback, cancelPromise);
 
 	return function cancel(){
-		promise.reject('canceled');
+		cancelPromise();
 
 		if (oldScreen) oldScreen.animateOut(true);
 		if (newScreen) newScreen.animateIn(true);
