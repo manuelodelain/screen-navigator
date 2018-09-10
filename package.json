@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/manuelodelain/screen-navigator",
   "dependencies": {
-    "inherits": "^2.0.1",
     "tiny-emitter": "^2.0.2"
   },
   "devDependencies": {
