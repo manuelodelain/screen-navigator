@@ -23,23 +23,68 @@ export default class ScreenNavigator extends EventEmitter {
     this.transitionRunning = false;
     this.transitionCancel = null;
   }
+
+  /**
+   * 
+   * @param {boolean} forceDispose 
+   */
+  dispose (forceDispose = true) {
+    if (this.transitionRunning){
+      if (this.transitionCancel) this.transitionCancel();
+
+      this.transitionRunning = false;
+    }
   
+    this.transitionCancel = null;
+  
+    this.disposeCurrentScreen();
+    this.disposePreviousScreen();
+  
+    for (let itemId in this.items){
+      this.items[itemId].dispose(forceDispose);
+  
+      this.removeScreen(itemId);
+    }
+  
+    this.transition = null;
+  }
+  
+  /**
+   * 
+   * @param {string} id - screen id
+   * @param {ScreenNavigatorItem} item 
+   * 
+   * @return {ScreenNavigatorItem} item
+   */
   addScreen (id, item) {
     this.items[id] = item;
   
     return item;
   }
 
+  /**
+   * @param {string} id - screen id
+   */
   removeScreen (id) {
     if (!this.items[id]) return;
 
     delete this.items[id];
   }
 
+  /**
+   * 
+   * @param {string} id - screen id
+   */
   getScreen (id) {
     return this.items[id];
   }
 
+  /**
+   * 
+   * @param {string} id - screen id
+   * @param {function} transition - optional transition, if not provided the default transition will be applied
+   * @param {object} options - optional options to apply to the new screen
+   */
   showScreen (id, transition = null, options = null) {
     if (!this.items[id]){
       throw new Error('ScreenNavigator - the item with the id ' + id + ' doesn\'t exist');
@@ -61,7 +106,11 @@ export default class ScreenNavigator extends EventEmitter {
     this.startTransition(transition, options);
   }
 
-  clearScreen (transition) {
+  /**
+   * 
+   * @param {function} transition - optional transition, if not provided the default transition will be applied
+   */
+  clearScreen (transition = null) {
     if (!this.currentScreen){
       return;
     }
@@ -76,6 +125,11 @@ export default class ScreenNavigator extends EventEmitter {
     this.startTransition(transition);
   }
 
+  /**
+   * 
+   * @param {string} id 
+   * @param {boolean} forceDispose 
+   */
   disposeScreen (id, forceDispose = false) {
     const item = this.items[id];
 
@@ -100,6 +154,11 @@ export default class ScreenNavigator extends EventEmitter {
     this.currentScreen = null;
   }
 
+  /**
+   * 
+   * @param {function} transition 
+   * @param {object} options 
+   */
   startTransition (transition = null, options = null) {
     transition = transition || this.transition;
   
@@ -120,6 +179,10 @@ export default class ScreenNavigator extends EventEmitter {
     this.emit('screenChange');
   }
 
+  /**
+   * 
+   * @param {boolean} cancelTransition 
+   */
   onTransitionComplete (cancelTransition = false) {
     this.transitionRunning = false;
   
@@ -136,27 +199,6 @@ export default class ScreenNavigator extends EventEmitter {
       }
   
     this.transitionCancel = null;
-  }
-
-  dispose (forceDispose = true) {
-    if (this.transitionRunning){
-      if (this.transitionCancel) this.transitionCancel();
-
-      this.transitionRunning = false;
-    }
-  
-    this.transitionCancel = null;
-  
-    this.disposeCurrentScreen();
-    this.disposePreviousScreen();
-  
-    for (let itemId in this.items){
-      this.items[itemId].dispose(forceDispose);
-  
-      this.removeScreen(itemId);
-    }
-  
-    this.transition = null;
   }
 }
 
