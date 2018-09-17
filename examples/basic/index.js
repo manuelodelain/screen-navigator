@@ -1,7 +1,10 @@
-const screenNavigator = new ScreenNavigator();
+// because - for the example - the library is imported with a script tag
+const AScreen = ScreenNavigator.AScreen;
+const ScreenNavigatorItem = ScreenNavigator.ScreenNavigatorItem;
+const Transitions = ScreenNavigator.Transitions;
 
 // this class will be instancied for each screen displayed
-class Screen extends ScreenNavigator.AScreen {
+class Screen extends AScreen {
     constructor (id) {
         super();
         
@@ -26,6 +29,8 @@ class Screen extends ScreenNavigator.AScreen {
     }
 }
 
+const screenNavigator = new ScreenNavigator();
+
 // button click handler
 function onScreenBtnClick (event) {
     const screenId = event.currentTarget.getAttribute('data-screen');
@@ -41,10 +46,10 @@ function onScreenBtnClick (event) {
 document.querySelectorAll('.screen-btn').forEach(element => element.addEventListener('click', onScreenBtnClick));
 
 // add screens to the navigator
-const item1 = new ScreenNavigator.ScreenNavigatorItem(Screen, {arguments: ['screen-1']});
+const item1 = new ScreenNavigatorItem(Screen, {arguments: ['screen-1']});
 screenNavigator.addScreen('screen-1', item1);
 
-const item2 = new ScreenNavigator.ScreenNavigatorItem(Screen, {arguments: ['screen-2']});
+const item2 = new ScreenNavigatorItem(Screen, {arguments: ['screen-2']});
 screenNavigator.addScreen('screen-2', item2);
 
 // show the first screen
