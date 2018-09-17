@@ -32,6 +32,10 @@ export default class ScreenNavigator extends EventEmitter {
     return item;
   }
 
+  removeItem (id) {
+
+  }
+
   getItem (id) {
     return this.items[id];
   }
@@ -70,6 +74,30 @@ export default class ScreenNavigator extends EventEmitter {
     this.onScreenChange();
   
     this.startTransition(transition);
+  }
+
+  disposeScreen (id, forceDispose = false) {
+    const item = this.items[id];
+
+    if (!item) return;
+
+    item.dispose(forceDispose);
+  }
+
+  disposePreviousScreen () {
+    if (!this.previousScreen) return;
+  
+    this.disposeScreen(this.previousItemId);
+  
+    this.previousScreen = null;
+  }
+
+  disposeCurrentScreen () {
+    if (!this.currentScreen) return;
+  
+    this.disposeScreen(this.currentItemId);
+  
+    this.currentScreen = null;
   }
 
   startTransition (transition, options) {
@@ -129,22 +157,6 @@ export default class ScreenNavigator extends EventEmitter {
     }
   
     this.transition = null;
-  }
-
-  disposePreviousScreen () {
-    if (!this.previousScreen) return;
-  
-    this.getItem(this.previousItemId).disposeScreen(this.previousScreen);
-  
-    this.previousScreen = null;
-  }
-
-  disposeCurrentScreen () {
-    if (!this.currentScreen) return;
-  
-    this.getItem(this.currentItemId).disposeScreen(this.currentScreen);
-  
-    this.currentScreen = null;
   }
 }
 
