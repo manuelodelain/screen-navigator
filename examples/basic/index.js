@@ -41,8 +41,11 @@ function onScreenBtnClick (event) {
 document.querySelectorAll('.screen-btn').forEach(element => element.addEventListener('click', onScreenBtnClick));
 
 // add screens to the navigator
-screenNavigator.addItem('screen-1', Screen, {arguments: ['screen-1']});
-screenNavigator.addItem('screen-2', Screen, {arguments: ['screen-2']});
+const item1 = new ScreenNavigator.ScreenNavigatorItem(Screen, {arguments: ['screen-1']});
+screenNavigator.addScreen('screen-1', item1);
+
+const item2 = new ScreenNavigator.ScreenNavigatorItem(Screen, {arguments: ['screen-2']});
+screenNavigator.addScreen('screen-2', item2);
 
 // show the first screen
 screenNavigator.showScreen('screen-1');

@@ -72,7 +72,7 @@ export default class ScreenNavigatorItem {
     }
   }
 
-  disposeScreen (instance, forceDispose) {
+  disposeScreen (instance, forceDispose = false) {
     if (this.events) this.removeEventsListeners(instance);
 
     if (!forceDispose && !this.canDispose) return;
@@ -82,9 +82,7 @@ export default class ScreenNavigatorItem {
     this.internalInstance = null;
   }
 
-  dispose (forceDispose) {
-    if (typeof forceDispose !== 'boolean') forceDispose = true;
-
+  dispose (forceDispose = true) {
     let instance = this.isInstance ? this.screen : this.internalInstance;
 
     if (instance){
