@@ -5,15 +5,15 @@ class Screen extends ScreenNavigator.AScreen {
     constructor (id) {
         super();
         
+        // keep the DOM element for showing / hiding it
         this.element = document.querySelector('#' + id);
-
-        this.animTimeout = null;
     }
 
     // show screen
     createAnimIn (resolvePromise) {
         this.element.style.display = 'block';
 
+        // resolve the animate in promise
         resolvePromise();
     }
 
@@ -21,6 +21,7 @@ class Screen extends ScreenNavigator.AScreen {
     createAnimOut (resolvePromise) {
         this.element.style.display = '';
 
+        // resolve the animate out promise
         resolvePromise();
     }
 }
@@ -29,8 +30,10 @@ class Screen extends ScreenNavigator.AScreen {
 function onScreenBtnClick (event) {
     const screenId = event.currentTarget.getAttribute('data-screen');
 
+    // if the current screen is the same as the clicked one
     if (screenId === screenNavigator.currentItemId) return;
 
+    // display the new screen
     screenNavigator.showScreen(screenId);
 }
 
