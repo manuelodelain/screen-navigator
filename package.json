@@ -7,7 +7,7 @@
     "dev": "watchify src/ScreenNavigator.js -s ScreenNavigator -t babelify -o dist/screen-navigator.js -dv",
     "build": "npm run build-dev && npm run build-prod",
     "build-dev": "browserify src/ScreenNavigator.js -s ScreenNavigator -t babelify > dist/screen-navigator.js",
-    "build-prod": "browserify src/ScreenNavigator.js -t babelify | uglifyjs > dist/screen-navigator.min.js"
+    "build-prod": "browserify src/ScreenNavigator.js -s ScreenNavigator -t babelify | uglifyjs > dist/screen-navigator.min.js"
   },
   "repository": {
     "type": "git",
