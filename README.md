@@ -25,10 +25,10 @@ var navigator = new ScreenNavigator();
 Add screens items
 ```javascript
 // add screen instance
-navigator.addItem('home', new Home());
+navigator.addScreen('home', new Home());
 
 // add screen class
-navigator.addItem('about', About);
+navigator.addScreen('about', About);
 ```
 
 Navigate between screens
