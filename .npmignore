@@ -3,5 +3,3 @@ examples/
 
 .DS_Store
 npm-debug.log
-
-examples/*/bundle.js

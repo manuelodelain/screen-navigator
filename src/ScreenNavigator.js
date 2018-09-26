@@ -9,8 +9,8 @@ export default class ScreenNavigator extends EventEmitter {
   static defaultTransition = Transitions.None;
 
   constructor () {
-    super();
-    
+    super(); 
+
     this.items = {};
 
     this.currentItemId = null;

@@ -4,10 +4,10 @@
   "description": "Navigate easily between screens, with transitions.",
   "main": "dist/screen-navigator.js",
   "scripts": {
-    "example-basic": "watchify examples/basic/index.js -t babelify -o examples/basic/bundle.js -dv",
-    "dev": "browserify src/ScreenNavigator.js -t babelify -o dist/screen-navigator.js",
-    "prod": "browserify src/ScreenNavigator.js -t babelify | uglifyjs > dist/screen-navigator.min.js",
-    "build": "npm run dev && npm run prod"
+    "dev": "watchify src/ScreenNavigator.js -s ScreenNavigator -t babelify -o dist/screen-navigator.js -dv",
+    "build": "npm run build-dev && npm run build-prod",
+    "build-dev": "browserify src/ScreenNavigator.js -s ScreenNavigator -t babelify > dist/screen-navigator.js",
+    "build-prod": "browserify src/ScreenNavigator.js -t babelify | uglifyjs > dist/screen-navigator.min.js"
   },
   "repository": {
     "type": "git",

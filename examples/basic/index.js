@@ -1,6 +1,9 @@
-import ScreenNavigator from '../../src/ScreenNavigator';
-import AScreen from '../../src/AScreen';
-import ScreenNavigatorItem from '../../src/ScreenNavigatorItem';
+// For the example the lib is included with a script tag.
+// With a standard es6 import, the definition would be:
+// import ScreenNavigator, {AScreen, ScreenNavigatorItem} from 'screen-navigator'
+const ScreenNavigator = window.ScreenNavigator.default;
+const AScreen = window.ScreenNavigator.AScreen;
+const ScreenNavigatorItem = window.ScreenNavigator.ScreenNavigatorItem;
 
 // this class will be instancied for each screen displayed
 class Screen extends AScreen {
