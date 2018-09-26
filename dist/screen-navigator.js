@@ -1,4 +1,4 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ScreenNavigator = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ScreenNavigator = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(_dereq_,module,exports){
 function E () {
   // Keep this empty so it's easier to inherit from
   // (via https://github.com/lipsmack from https://github.com/scottcorgan/tiny-emitter/issues/3)
@@ -66,7 +66,7 @@ E.prototype = {
 
 module.exports = E;
 
-},{}],2:[function(require,module,exports){
+},{}],2:[function(_dereq_,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -75,7 +75,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _tinyEmitter = require('tiny-emitter');
+var _tinyEmitter = _dereq_('tiny-emitter');
 
 var _tinyEmitter2 = _interopRequireDefault(_tinyEmitter);
 
@@ -148,7 +148,7 @@ var AScreen = function (_EventEmitter) {
 
 exports.default = AScreen;
 
-},{"tiny-emitter":1}],3:[function(require,module,exports){
+},{"tiny-emitter":1}],3:[function(_dereq_,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -158,19 +158,19 @@ exports.AScreen = exports.Transitions = exports.ScreenNavigatorItem = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _tinyEmitter = require('tiny-emitter');
+var _tinyEmitter = _dereq_('tiny-emitter');
 
 var _tinyEmitter2 = _interopRequireDefault(_tinyEmitter);
 
-var _ScreenNavigatorItem = require('./ScreenNavigatorItem');
+var _ScreenNavigatorItem = _dereq_('./ScreenNavigatorItem');
 
 var _ScreenNavigatorItem2 = _interopRequireDefault(_ScreenNavigatorItem);
 
-var _Transitions = require('./Transitions');
+var _Transitions = _dereq_('./Transitions');
 
 var _Transitions2 = _interopRequireDefault(_Transitions);
 
-var _AScreen = require('./AScreen');
+var _AScreen = _dereq_('./AScreen');
 
 var _AScreen2 = _interopRequireDefault(_AScreen);
 
@@ -437,7 +437,7 @@ var ScreenNavigator = function (_EventEmitter) {
 ScreenNavigator.defaultTransition = _Transitions2.default.None;
 exports.default = ScreenNavigator;
 
-},{"./AScreen":2,"./ScreenNavigatorItem":4,"./Transitions":5,"tiny-emitter":1}],4:[function(require,module,exports){
+},{"./AScreen":2,"./ScreenNavigatorItem":4,"./Transitions":5,"tiny-emitter":1}],4:[function(_dereq_,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -563,34 +563,34 @@ var ScreenNavigatorItem = function () {
 
 exports.default = ScreenNavigatorItem;
 
-},{}],5:[function(require,module,exports){
+},{}],5:[function(_dereq_,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _None = require('./transitions/None.js');
+var _None = _dereq_('./transitions/None.js');
 
 var _None2 = _interopRequireDefault(_None);
 
-var _In = require('./transitions/In.js');
+var _In = _dereq_('./transitions/In.js');
 
 var _In2 = _interopRequireDefault(_In);
 
-var _Out = require('./transitions/Out.js');
+var _Out = _dereq_('./transitions/Out.js');
 
 var _Out2 = _interopRequireDefault(_Out);
 
-var _OutAndIn = require('./transitions/OutAndIn.js');
+var _OutAndIn = _dereq_('./transitions/OutAndIn.js');
 
 var _OutAndIn2 = _interopRequireDefault(_OutAndIn);
 
-var _OutThenIn = require('./transitions/OutThenIn.js');
+var _OutThenIn = _dereq_('./transitions/OutThenIn.js');
 
 var _OutThenIn2 = _interopRequireDefault(_OutThenIn);
 
-var _InThenOut = require('./transitions/InThenOut.js');
+var _InThenOut = _dereq_('./transitions/InThenOut.js');
 
 var _InThenOut2 = _interopRequireDefault(_InThenOut);
 
@@ -598,7 +598,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = { None: _None2.default, In: _In2.default, Out: _Out2.default, InThenOut: _InThenOut2.default, OutAndIn: _OutAndIn2.default, OutThenIn: _OutThenIn2.default };
 
-},{"./transitions/In.js":6,"./transitions/InThenOut.js":7,"./transitions/None.js":8,"./transitions/Out.js":9,"./transitions/OutAndIn.js":10,"./transitions/OutThenIn.js":11}],6:[function(require,module,exports){
+},{"./transitions/In.js":6,"./transitions/InThenOut.js":7,"./transitions/None.js":8,"./transitions/Out.js":9,"./transitions/OutAndIn.js":10,"./transitions/OutThenIn.js":11}],6:[function(_dereq_,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -626,7 +626,7 @@ exports.default = function (newScreen, oldScreen, completeCallback) {
 
 ;
 
-},{}],7:[function(require,module,exports){
+},{}],7:[function(_dereq_,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -650,7 +650,7 @@ exports.default = function (newScreen, oldScreen, completeCallback) {
 
 ;
 
-},{}],8:[function(require,module,exports){
+},{}],8:[function(_dereq_,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -668,7 +668,7 @@ exports.default = function (newScreen, oldScreen, completeCallback) {
 
 ;
 
-},{}],9:[function(require,module,exports){
+},{}],9:[function(_dereq_,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -696,7 +696,7 @@ exports.default = function (newScreen, oldScreen, completeCallback) {
 
 ;
 
-},{}],10:[function(require,module,exports){
+},{}],10:[function(_dereq_,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -720,7 +720,7 @@ exports.default = function (newScreen, oldScreen, completeCallback) {
 
 ;
 
-},{}],11:[function(require,module,exports){
+},{}],11:[function(_dereq_,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

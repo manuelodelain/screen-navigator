@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "watchify src/ScreenNavigator.js -s ScreenNavigator -t babelify -o dist/screen-navigator.js -dv",
     "build": "npm run build-dev && npm run build-prod",
-    "build-dev": "browserify src/ScreenNavigator.js -s ScreenNavigator -t babelify > dist/screen-navigator.js",
-    "build-prod": "browserify src/ScreenNavigator.js -s ScreenNavigator -t babelify | uglifyjs > dist/screen-navigator.min.js"
+    "build-dev": "browserify src/ScreenNavigator.js -s ScreenNavigator -t babelify | derequire > dist/screen-navigator.js",
+    "build-prod": "browserify src/ScreenNavigator.js -s ScreenNavigator -t babelify | derequire | uglifyjs > dist/screen-navigator.min.js"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
     "babel-preset-env": "^1.7.0",
     "babelify": "^8.0.0",
     "browserify": "^16.2.2",
+    "derequire": "^2.0.6",
     "uglify-js": "^3.4.9",
     "watchify": "^3.2.1"
   }
