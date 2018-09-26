@@ -3,5 +3,5 @@ examples/
 
 .DS_Store
 npm-debug.log
-*.sublime-project
-*.sublime-workspace
+
+examples/*/bundle.js

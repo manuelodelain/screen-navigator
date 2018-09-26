@@ -1,7 +1,6 @@
-// because - for the example - the library is imported with a script tag
-const AScreen = ScreenNavigator.AScreen;
-const ScreenNavigatorItem = ScreenNavigator.ScreenNavigatorItem;
-const Transitions = ScreenNavigator.Transitions;
+import ScreenNavigator from '../../src/ScreenNavigator';
+import AScreen from '../../src/AScreen';
+import ScreenNavigatorItem from '../../src/ScreenNavigatorItem';
 
 // this class will be instancied for each screen displayed
 class Screen extends AScreen {

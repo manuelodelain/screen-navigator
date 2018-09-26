@@ -2,10 +2,12 @@
   "name": "screen-navigator",
   "version": "2.0.0",
   "description": "Navigate easily between screens, with transitions.",
-  "main": "src/ScreenNavigator.js",
+  "main": "dist/screen-navigator.js",
   "scripts": {
-    "dev": "watchify standalone.js -t babelify -o dist/screen-navigator.js -dv",
-    "prod": "browserify standalone.js -t babelify | uglifyjs > dist/screen-navigator.min.js"
+    "example-basic": "watchify examples/basic/index.js -t babelify -o examples/basic/bundle.js -dv",
+    "dev": "browserify src/ScreenNavigator.js -t babelify -o dist/screen-navigator.js",
+    "prod": "browserify src/ScreenNavigator.js -t babelify | uglifyjs > dist/screen-navigator.min.js",
+    "build": "npm run dev && npm run prod"
   },
   "repository": {
     "type": "git",
