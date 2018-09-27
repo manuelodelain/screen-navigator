@@ -106,9 +106,11 @@ var AScreen = function (_EventEmitter) {
 
       var cancelTransition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
+      this.emit('animateIn', { cancelTransition: cancelTransition });
+
       return new Promise(function (resolve) {
         if (cancelTransition) _this2.cancelAnimIn(resolve);else _this2.createAnimIn(resolve);
-      });
+      }).then(this.onAnimateInComplete.bind(this, cancelTransition));
     }
   }, {
     key: 'createAnimIn',
@@ -127,9 +129,11 @@ var AScreen = function (_EventEmitter) {
 
       var cancelTransition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
+      this.emit('animateOut', { cancelTransition: cancelTransition });
+
       return new Promise(function (resolve) {
         if (cancelTransition) _this3.cancelAnimOut(resolve);else _this3.createAnimOut(resolve);
-      });
+      }).then(this.onAnimateOutComplete.bind(this, cancelTransition));
     }
   }, {
     key: 'createAnimOut',
@@ -140,6 +144,16 @@ var AScreen = function (_EventEmitter) {
     key: 'cancelAnimOut',
     value: function cancelAnimOut(resolvePromise) {
       resolvePromise();
+    }
+  }, {
+    key: 'onAnimateInComplete',
+    value: function onAnimateInComplete(canceledTransition) {
+      this.emit('animateInComplete', { canceledTransition: canceledTransition });
+    }
+  }, {
+    key: 'onAnimateOutComplete',
+    value: function onAnimateOutComplete(canceledTransition) {
+      this.emit('animateOutComplete', { canceledTransition: canceledTransition });
     }
   }]);
 

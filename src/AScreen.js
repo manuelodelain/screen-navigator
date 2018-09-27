@@ -5,10 +5,13 @@ export default class AScreen extends EventEmitter {
   }
 
   animateIn (cancelTransition = false) {
+    this.emit('animateIn', {cancelTransition});
+    
     return new Promise(resolve => {
       if (cancelTransition) this.cancelAnimIn(resolve);
       else this.createAnimIn(resolve);
-    });
+    })
+      .then(this.onAnimateInComplete.bind(this, cancelTransition));
   }
 
   createAnimIn (resolvePromise) {
@@ -20,10 +23,13 @@ export default class AScreen extends EventEmitter {
   }
   
   animateOut (cancelTransition = false) {
+    this.emit('animateOut', {cancelTransition});
+
     return new Promise(resolve => {
       if (cancelTransition) this.cancelAnimOut(resolve);
       else this.createAnimOut(resolve);
-    });
+    })
+      .then(this.onAnimateOutComplete.bind(this, cancelTransition));
   }
 
   createAnimOut (resolvePromise) {
@@ -32,6 +38,14 @@ export default class AScreen extends EventEmitter {
 
   cancelAnimOut (resolvePromise) {
     resolvePromise();
+  }
+
+  onAnimateInComplete (canceledTransition) {
+    this.emit('animateInComplete', {canceledTransition});
+  }
+  
+  onAnimateOutComplete (canceledTransition) {
+    this.emit('animateOutComplete', {canceledTransition});
   }
 }
 
