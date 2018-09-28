@@ -110,7 +110,9 @@ var AScreen = function (_EventEmitter) {
 
       return new Promise(function (resolve) {
         if (cancelTransition) _this2.cancelAnimIn(resolve);else _this2.createAnimIn(resolve);
-      }).then(this.onAnimateInComplete.bind(this, cancelTransition));
+      }).then(this.onAnimateInComplete.bind(this, cancelTransition)).catch(function (error) {
+        console.log(error);
+      });
     }
   }, {
     key: 'createAnimIn',
@@ -133,7 +135,9 @@ var AScreen = function (_EventEmitter) {
 
       return new Promise(function (resolve) {
         if (cancelTransition) _this3.cancelAnimOut(resolve);else _this3.createAnimOut(resolve);
-      }).then(this.onAnimateOutComplete.bind(this, cancelTransition));
+      }).then(this.onAnimateOutComplete.bind(this, cancelTransition)).catch(function (error) {
+        console.log(error);
+      });
     }
   }, {
     key: 'createAnimOut',
