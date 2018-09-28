@@ -1,6 +1,6 @@
 {
   "name": "screen-navigator",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "Navigate easily between screens, with transitions.",
   "main": "dist/screen-navigator.js",
   "scripts": {
