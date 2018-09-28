@@ -128,20 +128,23 @@ export default class ScreenNavigator extends EventEmitter {
   /**
    * 
    * @param {string} id 
+   * @param {object} screen
    * @param {boolean} forceDispose 
    */
-  disposeScreen (id, forceDispose = false) {
+  disposeScreen (id, screen, forceDispose = false) {
+    if (!screen) return;
+    
     const item = this.items[id];
 
     if (!item) return;
 
-    item.disposeScreen(forceDispose);
+    item.disposeScreen(screen, forceDispose);
   }
 
   disposePreviousScreen () {
     if (!this.previousScreen) return;
   
-    this.disposeScreen(this.previousItemId);
+    this.disposeScreen(this.previousItemId, this.previousScreen);
   
     this.previousScreen = null;
   }
@@ -149,7 +152,7 @@ export default class ScreenNavigator extends EventEmitter {
   disposeCurrentScreen () {
     if (!this.currentScreen) return;
   
-    this.disposeScreen(this.currentItemId);
+    this.disposeScreen(this.currentItemId, this.currentScreen);
   
     this.currentScreen = null;
   }
