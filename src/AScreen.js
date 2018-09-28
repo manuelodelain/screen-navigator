@@ -11,7 +11,10 @@ export default class AScreen extends EventEmitter {
       if (cancelTransition) this.cancelAnimIn(resolve);
       else this.createAnimIn(resolve);
     })
-      .then(this.onAnimateInComplete.bind(this, cancelTransition));
+      .then(this.onAnimateInComplete.bind(this, cancelTransition))
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   createAnimIn (resolvePromise) {
@@ -29,7 +32,10 @@ export default class AScreen extends EventEmitter {
       if (cancelTransition) this.cancelAnimOut(resolve);
       else this.createAnimOut(resolve);
     })
-      .then(this.onAnimateOutComplete.bind(this, cancelTransition));
+      .then(this.onAnimateOutComplete.bind(this, cancelTransition))
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   createAnimOut (resolvePromise) {
