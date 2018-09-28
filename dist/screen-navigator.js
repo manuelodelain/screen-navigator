@@ -356,26 +356,29 @@ var ScreenNavigator = function (_EventEmitter) {
     /**
      * 
      * @param {string} id 
+     * @param {object} screen
      * @param {boolean} forceDispose 
      */
 
   }, {
     key: 'disposeScreen',
-    value: function disposeScreen(id) {
-      var forceDispose = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    value: function disposeScreen(id, screen) {
+      var forceDispose = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+      if (!screen) return;
 
       var item = this.items[id];
 
       if (!item) return;
 
-      item.disposeScreen(forceDispose);
+      item.disposeScreen(screen, forceDispose);
     }
   }, {
     key: 'disposePreviousScreen',
     value: function disposePreviousScreen() {
       if (!this.previousScreen) return;
 
-      this.disposeScreen(this.previousItemId);
+      this.disposeScreen(this.previousItemId, this.previousScreen);
 
       this.previousScreen = null;
     }
@@ -384,7 +387,7 @@ var ScreenNavigator = function (_EventEmitter) {
     value: function disposeCurrentScreen() {
       if (!this.currentScreen) return;
 
-      this.disposeScreen(this.currentItemId);
+      this.disposeScreen(this.currentItemId, this.currentScreen);
 
       this.currentScreen = null;
     }
