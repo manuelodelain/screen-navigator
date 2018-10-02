@@ -3,6 +3,7 @@
   "version": "2.0.9",
   "description": "Navigate easily between screens, with transitions.",
   "main": "dist/screen-navigator.js",
+  "module": "src/ScreenNavigator.js",
   "scripts": {
     "dev": "watchify src/ScreenNavigator.js -s ScreenNavigator -t babelify -o dist/screen-navigator.js -dv",
     "build": "npm run build-dev && npm run build-prod",
