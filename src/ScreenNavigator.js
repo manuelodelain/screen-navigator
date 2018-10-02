@@ -6,8 +6,6 @@ import AScreen from './AScreen'
 export {ScreenNavigatorItem, Transitions, AScreen}
 
 export default class ScreenNavigator extends EventEmitter {
-  static defaultTransition = Transitions.None;
-
   constructor () {
     super(); 
 
@@ -19,7 +17,7 @@ export default class ScreenNavigator extends EventEmitter {
     this.currentScreen = null;
     this.previousScreen = null;
 
-    this.transition = ScreenNavigator.defaultTransition;
+    this.transition = Transitions.None;
     this.transitionRunning = false;
     this.transitionCancel = null;
   }
