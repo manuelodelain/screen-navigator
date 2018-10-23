@@ -742,7 +742,7 @@ var InThenOut = function (_ATransition) {
 	_createClass(InThenOut, [{
 		key: 'createPromise',
 		value: function createPromise() {
-			return Promise.resolve().then(this.newScreen && this.newScreen.animateIn.bind(this.newScreen), cancelPromise).then(this.oldScreen && this.oldScreen.animateOut.bind(this.oldScreen), this.cancelPromise);
+			return Promise.resolve().then(this.newScreen && this.newScreen.animateIn.bind(this.newScreen), this.cancelPromise).then(this.oldScreen && this.oldScreen.animateOut.bind(this.oldScreen), this.cancelPromise);
 		}
 	}]);
 
@@ -917,7 +917,7 @@ var OutThenIn = function (_ATransition) {
 	_createClass(OutThenIn, [{
 		key: 'createPromise',
 		value: function createPromise() {
-			return Promise.resolve().then(this.oldScreen && this.oldScreen.animateOut.bind(this.oldScreen), this.cancelPromise).then(this.newScreen && this.newScreen.animateIn.bind(this.newScreen), cancelPromise);
+			return Promise.resolve().then(this.oldScreen && this.oldScreen.animateOut.bind(this.oldScreen), this.cancelPromise).then(this.newScreen && this.newScreen.animateIn.bind(this.newScreen), this.cancelPromise);
 		}
 	}]);
 
