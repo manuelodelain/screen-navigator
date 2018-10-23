@@ -4,6 +4,7 @@
 const ScreenNavigator = window.ScreenNavigator.default;
 const AScreen = window.ScreenNavigator.AScreen;
 const ScreenNavigatorItem = window.ScreenNavigator.ScreenNavigatorItem;
+const Transitions = window.ScreenNavigator.Transitions;
 
 // this class will be instancied for each screen displayed
 class Screen extends AScreen {
@@ -32,6 +33,7 @@ class Screen extends AScreen {
 }
 
 const screenNavigator = new ScreenNavigator();
+// screenNavigator.transitionType = Transitions.In;
 
 // button click handler
 function onScreenBtnClick (event) {

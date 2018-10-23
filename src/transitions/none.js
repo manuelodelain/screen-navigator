@@ -1,8 +1,10 @@
-export default function(newScreen, oldScreen, completeCallback) {
-	if (oldScreen) oldScreen.animateOut();
-	if (newScreen) newScreen.animateIn();
+import ATransition from './ATransition';
 
-	completeCallback();
+export default class None extends ATransition {
+	createPromise () {
+		if (this.oldScreen) this.oldScreen.animateOut();
+		if (this.newScreen) this.newScreen.animateIn();
 
-	return function cancel () {};
-};
+		return Promise.resolve();
+	}
+}

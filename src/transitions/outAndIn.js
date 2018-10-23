@@ -1,17 +1,10 @@
-export default function(newScreen, oldScreen, completeCallback) {
-	function cancelPromise() {
-		return Promise.reject('cancel transition').catch(function (error) {});
-	};
+import ATransition from './ATransition';
 
-	Promise.all([
-		Promise.resolve().then(oldScreen && oldScreen.animateOut.bind(oldScreen), cancelPromise),
-		Promise.resolve().then(newScreen && newScreen.animateIn.bind(newScreen), cancelPromise),
-	]).then(completeCallback);
-
-	return function cancel(){
-		cancelPromise();
-
-		if (oldScreen) oldScreen.animateOut(true);
-		if (newScreen) newScreen.animateIn(true);
+export default class OutAndIn extends ATransition {
+	createPromise () {
+		return Promise.all([
+			Promise.resolve().then(this.oldScreen && this.oldScreen.animateOut.bind(this.oldScreen), this.cancelPromise),
+			Promise.resolve().then(this.newScreen && this.newScreen.animateIn.bind(this.newScreen), this.cancelPromise),
+		]);
 	}
-};
+}

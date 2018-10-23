@@ -2,8 +2,9 @@ import EventEmitter from 'tiny-emitter';
 import ScreenNavigatorItem from './ScreenNavigatorItem';
 import Transitions from './Transitions';
 import AScreen from './AScreen'
+import ATransition from './transitions/ATransition';
 
-export {ScreenNavigatorItem, Transitions, AScreen}
+export {ScreenNavigatorItem, Transitions, AScreen, ATransition}
 
 export default class ScreenNavigator extends EventEmitter {
   constructor () {
@@ -17,9 +18,8 @@ export default class ScreenNavigator extends EventEmitter {
     this.currentScreen = null;
     this.previousScreen = null;
 
-    this.transition = Transitions.None;
-    this.transitionRunning = false;
-    this.transitionCancel = null;
+    this.transition = null;
+    this.transitionType = Transitions.None;
   }
 
   /**
@@ -27,13 +27,10 @@ export default class ScreenNavigator extends EventEmitter {
    * @param {boolean} forceDispose 
    */
   dispose (forceDispose = true) {
-    if (this.transitionRunning){
-      if (this.transitionCancel) this.transitionCancel();
-
-      this.transitionRunning = false;
+    if (this.transition){
+      this.transition.cancel();
+      this.transition = null;
     }
-  
-    this.transitionCancel = null;
   
     this.disposeCurrentScreen();
     this.disposePreviousScreen();
@@ -44,7 +41,7 @@ export default class ScreenNavigator extends EventEmitter {
       this.removeScreen(itemId);
     }
   
-    this.transition = null;
+    this.transitionType = null;
   }
   
   /**
@@ -80,15 +77,14 @@ export default class ScreenNavigator extends EventEmitter {
   /**
    * 
    * @param {string} id - screen id
-   * @param {function} transition - optional transition, if not provided the default transition will be applied
+   * @param {ATransition} transition - optional transition, if not provided the default transition will be applied
    * @param {object} options - optional options to apply to the new screen
    */
   showScreen (id, transition = null, options = null) {
     if (!this.items[id]){
       throw new Error('ScreenNavigator - the item with the id ' + id + ' doesn\'t exist');
     }
-  
-    if (this.transitionRunning){
+    if (this.transition){
       this.onTransitionComplete(true);
     } 
   
@@ -102,11 +98,13 @@ export default class ScreenNavigator extends EventEmitter {
     this.onScreenChange();
   
     this.startTransition(transition, options);
+
+    return this.transition;
   }
 
   /**
    * 
-   * @param {function} transition - optional transition, if not provided the default transition will be applied
+   * @param {ATransition} transition - optional transition, if not provided the default transition will be applied
    */
   clearScreen (transition = null) {
     if (!this.currentScreen){
@@ -157,23 +155,22 @@ export default class ScreenNavigator extends EventEmitter {
 
   /**
    * 
-   * @param {function} transition 
+   * @param {ATransition} transition 
    * @param {object} options 
    */
   startTransition (transition = null, options = null) {
-    transition = transition || this.transition;
-  
+    const transitionClass = transition || this.transitionType;
     const currentItem = this.items[this.currentItemId];
   
     if (options) currentItem.setOptions(options);
   
     this.currentScreen = currentItem ? currentItem.getScreen(options) : null;
   
-    this.transitionRunning = true;
-  
     this.emit('transitionStart');
   
-    this.transitionCancel = transition(this.currentScreen, this.previousScreen, this.onTransitionComplete.bind(this));
+    this.transition = new transitionClass(this.currentScreen, this.previousScreen);
+
+    this.transition.promise.then(this.onTransitionComplete.bind(this));
   }
 
   onScreenChange () {
@@ -185,21 +182,19 @@ export default class ScreenNavigator extends EventEmitter {
    * @param {boolean} cancelTransition 
    */
   onTransitionComplete (cancelTransition = false) {
-    this.transitionRunning = false;
-  
-    if (cancelTransition){
-      if (this.transitionCancel) this.transitionCancel();
+    if (cancelTransition && this.transition){
+      this.transition.cancel();
     }
+
+    this.transition = null;
     
     this.disposePreviousScreen();
   
-      if (cancelTransition){
-        this.emit('transitionCancel');
-      }else{
-        this.emit('transitionComplete');
-      }
-  
-    this.transitionCancel = null;
+    if (cancelTransition){
+      this.emit('transitionCancel');
+    }else{
+      this.emit('transitionComplete');
+    }
   }
 }
 
