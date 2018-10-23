@@ -99,7 +99,7 @@ export default class ScreenNavigator extends EventEmitter {
   
     this.startTransition(transition, options);
 
-    return this.transition;
+    return this.transition.promise;
   }
 
   /**
