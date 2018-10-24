@@ -170,7 +170,9 @@ export default class ScreenNavigator extends EventEmitter {
   
     this.transition = new transitionClass(this.currentScreen, this.previousScreen);
 
-    this.transition.promise.then(this.onTransitionComplete.bind(this));
+    this.transition.promise.then(() => {
+      this.onTransitionComplete();
+    });
   }
 
   onScreenChange () {
