@@ -33,7 +33,7 @@ class Screen extends AScreen {
 }
 
 const screenNavigator = new ScreenNavigator();
-// screenNavigator.transitionType = Transitions.In;
+// screenNavigator.transitionType = Transitions.OutAndIn;
 
 // button click handler
 function onScreenBtnClick (event) {

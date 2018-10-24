@@ -403,6 +403,8 @@ var ScreenNavigator = function (_EventEmitter) {
   }, {
     key: 'startTransition',
     value: function startTransition() {
+      var _this2 = this;
+
       var transition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
@@ -417,7 +419,9 @@ var ScreenNavigator = function (_EventEmitter) {
 
       this.transition = new transitionClass(this.currentScreen, this.previousScreen);
 
-      this.transition.promise.then(this.onTransitionComplete.bind(this));
+      this.transition.promise.then(function () {
+        _this2.onTransitionComplete();
+      });
     }
   }, {
     key: 'onScreenChange',
