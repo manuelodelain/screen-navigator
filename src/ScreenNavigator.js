@@ -119,6 +119,8 @@ export default class ScreenNavigator extends EventEmitter {
     this.onScreenChange();
   
     this.startTransition(transition);
+
+    return this.transition.promise;
   }
 
   /**
