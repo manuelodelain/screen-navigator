@@ -106,7 +106,7 @@ export default class ScreenNavigator extends EventEmitter {
    * 
    * @param {ATransition} transition - optional transition, if not provided the default transition will be applied
    */
-  clearScreen (transition = null) {
+  clearScreen (transition = null, options = null) {
     if (!this.currentScreen){
       return;
     }
@@ -118,7 +118,7 @@ export default class ScreenNavigator extends EventEmitter {
   
     this.onScreenChange();
   
-    this.startTransition(transition);
+    this.startTransition(transition, options);
 
     return this.transition.promise;
   }
