@@ -166,7 +166,7 @@ export default class ScreenNavigator extends EventEmitter {
   
     if (options) currentItem.setOptions(options);
   
-    this.currentScreen = currentItem ? currentItem.getScreen(options) : null;
+    this.currentScreen = currentItem ? currentItem.getScreen() : null;
   
     this.emit('transitionStart');
   
