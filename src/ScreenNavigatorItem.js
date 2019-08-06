@@ -27,7 +27,7 @@ export default class ScreenNavigatorItem {
 
     if (this.isInstance){
       instance = this.screen;
-    } else if (this.internalInstance){
+    } else if (!this.canDispose && this.internalInstance){
       instance = this.internalInstance;
     } else {
       const args = this.arguments || [];
