@@ -353,6 +353,8 @@ var ScreenNavigator = function (_EventEmitter) {
       this.onScreenChange();
 
       this.startTransition(transition);
+
+      return this.transition.promise;
     }
 
     /**
@@ -413,7 +415,7 @@ var ScreenNavigator = function (_EventEmitter) {
 
       if (options) currentItem.setOptions(options);
 
-      this.currentScreen = currentItem ? currentItem.getScreen(options) : null;
+      this.currentScreen = currentItem ? currentItem.getScreen() : null;
 
       this.emit('transitionStart');
 
@@ -507,7 +509,7 @@ var ScreenNavigatorItem = function () {
 
       if (this.isInstance) {
         instance = this.screen;
-      } else if (this.internalInstance) {
+      } else if (!this.canDispose && this.internalInstance) {
         instance = this.internalInstance;
       } else {
         var args = this.arguments || [];
